@@ -292,4 +292,4 @@ class AttForm2(forms.ModelForm):
         attendance.junioratt = self.cleaned_data['junioratt']
         if commit:
             attendance.save()
-        return attendance
+        return attendancellll
