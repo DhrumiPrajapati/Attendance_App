@@ -253,43 +253,44 @@ class AttForm1(forms.ModelForm):
     #         attendance.save()
     #     return attendance
 
-# class AttForm2(forms.ModelForm):
-#     ATTENDANCE = (('Full Day','Full Day'),
-#                   ('Half Day','Half Day'),
-#                   ('Overtime','Overtime'),
-#                   ('Absent','Absent'),)
-    
-#     junioratt = forms.ChoiceField(choices=ATTENDANCE, widget=forms.RadioSelect,label='Attendance')
-#     # def save(self, commit=True):
-#     #     attendance = super().save(commit=False)
-#     #     #attendance.junioratt = self.cleaned_data['junioratt']
-#     #     if commit:
-#     #         attendance.save()
-#     #     return attendance
-    
-#     class Meta:
-#         model = Attendance
-#         #fields = ['juniors','junioratt']
-#         fields = ['juniors','junioratt']
-
 class AttForm2(forms.ModelForm):
-    ATTENDANCE = (
-        ('Full Day', 'Full Day'),
-        ('Half Day', 'Half Day'),
-        ('Overtime', 'Overtime'),
-        ('Absent', 'Absent'),
-    )
-
-    junioratt = forms.ChoiceField(choices=ATTENDANCE, widget=forms.RadioSelect)
-
+    ATTENDANCE = (('Full Day','Full Day'),
+                  ('Half Day','Half Day'),
+                  ('Overtime','Overtime'),
+                  ('Absent','Absent'),)
+    
+    junioratt = forms.ChoiceField(choices=ATTENDANCE, widget=forms.RadioSelect,label='Attendance')
+    
     class Meta:
         model = Attendance
-        fields = ('senioratt',)
+        #fields = ['juniors','junioratt']
+        fields = ['juniors','junioratt']
 
     def save(self, commit=True):
         attendance = super().save(commit=False)
-        attendance.senioratt = self.cleaned_data['senioratt']
-        attendance.junioratt = self.cleaned_data['junioratt']
+        #attendance.junioratt = self.cleaned_data['junioratt']
         if commit:
             attendance.save()
         return attendance
+
+# class AttForm2(forms.ModelForm):
+#     ATTENDANCE = (
+#         ('Full Day', 'Full Day'),
+#         ('Half Day', 'Half Day'),
+#         ('Overtime', 'Overtime'),
+#         ('Absent', 'Absent'),
+#     )
+
+#     junioratt = forms.ChoiceField(choices=ATTENDANCE, widget=forms.RadioSelect)
+
+#     class Meta:
+#         model = Attendance
+#         fields = ('senioratt',)
+
+#     def save(self, commit=True):
+#         attendance = super().save(commit=False)
+#         attendance.senioratt = self.cleaned_data['senioratt']
+#         attendance.junioratt = self.cleaned_data['junioratt']
+#         if commit:
+#             attendance.save()
+#         return attendance

@@ -43,8 +43,8 @@
                     <th scope="col">Name</th>
                     <th scope="col">Full Day</th>
                     <th scope="col">Half Day</th>
-                    <th scope="col">Absent</th>
                     <th scope="col">Overtime</th>
+                    <th scope="col">Absent</th>
                   </tr>
                 </thead>
                 <tbody  class="text-left">
@@ -52,7 +52,7 @@
                     <tr class="text-center">
                         <td class="col-2 font-weight-bold">{{ x }}</td>
                         {% for choice in attform2.fields.junioratt.choices %}
-                            <td><input type="radio" name="{{ x.id }}_attendance" ></td>
+                            <td><input type="radio" name="{{ x.id }}_attendance" value="{{ choice.0 }}" {% if attform2.initial.junior_attendance == choice.0 %}checked{% endif %}></td>
                         {% endfor %}
                         <!-- <td><input type="radio" name="{{ x.id }}_attendance" value="Full Day"></td>
                         <td><input type="radio" name="{{ x.id }}_attendance" value="Half Day"></td>

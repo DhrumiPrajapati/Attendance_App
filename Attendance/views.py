@@ -467,61 +467,16 @@ def SrjrEntry(request):
 
     return HttpResponse(template.render(context, request))
 
-# def AttForm(request):
-#     att = Attendance()
-#     map_data = Mapping.objects.filter(user=request.user)
-#     juniors = Mapping.objects.filter(user=request.user)
-#     juniors_attendance = []
-
-#     if request.method == 'POST':
-#         attform1 = AttForm1(request.POST, instance=att)
-#         attform2 = AttForm2(request.POST, instance=att)
-#         if attform2.is_valid():
-#             att = attform1.save(commit=False)
-#             att = attform2.save(commit=False)
-#             att.user = request.user
-#             att.save()
-
-#             for junior in juniors:
-#                 try:
-#                     attendance = Attendance.objects.get(juniors=junior, user=request.user)
-#                 except Attendance.DoesNotExist:
-#                     attendance = Attendance(juniors=junior, user=request.user)
-#                 attendance.juniors_attendance = request.POST.get(f"{junior.id}_attendance")
-#                 attendance.save()
-#                 juniors_attendance.append(attendance)
-
-#             return redirect('AttEntry')
-#     else:
-#         attform1 = AttForm1(instance=att)
-#         attform2 = AttForm2(instance=att)
-
-#         for junior in juniors:
-#             try:
-#                 attendance = Attendance.objects.get(juniors=junior, user=request.user)
-#             except Attendance.DoesNotExist:
-#                 attendance = Attendance(juniors=junior, user=request.user)
-#             juniors_attendance.append(attendance)
-
-#     return render(request, "AttForm.html", {
-#         'attform1': attform1,
-#         'attform2': attform2,
-#         'juniors': juniors,
-#         'juniors_attendance': juniors_attendance,
-#         'map_data': map_data
-#     })
-
 @login_required(login_url='loginview')
 @never_cache
 def AttFormView(request):
     att = Attendance()
-    print(att)
     map_data = Mapping.objects.filter(user=request.user)
 
     if request.method == 'POST':
         attform1 = AttForm1(request.POST, instance=att)
         attform2 = AttForm2(request.POST, instance=att)
-        if attform1.is_valid() and attform2.is_valid():
+        if attform2.is_valid():
             att = attform1.save(commit=False)
             att = attform2.save(commit=False)
             att.user = request.user
@@ -534,18 +489,12 @@ def AttFormView(request):
     juniors = Mapping.objects.filter(user=request.user)
     
     juniors_attendance = []
-    # Initialize juniors_attendance with an empty list
     for junior in juniors:
-        print("juni",junior)
-        attendance = Attendance(juniors=junior, user=request.user)
-        print(juniors)
-        print("attendance",attendance)
+        try:
+            attendance = Attendance.objects.get(juniors=junior, user=request.user)
+        except Attendance.DoesNotExist:
+            attendance = Attendance(juniors=junior, user=request.user)
         juniors_attendance.append(attendance)
-
-    for attendance in juniors_attendance:
-       print(attendance)
-        #attendance = Attendance.objects.get(juniors=attendance.juniors, user=request.user)
-       
 
     return render(request, "AttForm.html", {
         'attform1': attform1,
@@ -555,50 +504,6 @@ def AttFormView(request):
         'map_data': map_data
     })
 
-
-
-
-
-################################################################
-
-# @login_required(login_url='loginview')
-# @never_cache
-# def AttForm(request):
-#     att = Attendance()
-#     map_data = Mapping.objects.filter(user=request.user)
-
-#     if request.method == 'POST':
-#         attform1 = AttForm1(request.POST, instance=att)
-#         attform2 = AttForm2(request.POST, instance=att)
-#         if attform2.is_valid():
-#             att = attform1.save(commit=False)
-#             att = attform2.save(commit=False)
-#             att.user = request.user
-#             att.save()
-#             return redirect('AttEntry')
-#     else:
-#         attform1 = AttForm1(instance=att)
-#         attform2 = AttForm2(instance=att)
-
-#     juniors = Mapping.objects.filter(user=request.user)
-    
-#     juniors_attendance = []
-#     for junior in juniors:
-#         try:
-#             attendance = Attendance.objects.get(juniors=junior, user=request.user)
-#         except Attendance.DoesNotExist:
-#             attendance = Attendance(juniors=junior, user=request.user)
-#         juniors_attendance.append(attendance)
-
-#     return render(request, "AttForm.html", {
-#         'attform1': attform1,
-#         'attform2': attform2,
-#         'juniors': juniors,
-#         'juniors_attendance': juniors_attendance,
-#         'map_data': map_data
-#     })
-
-################################################################
 # Attendance Form View
 # @login_required(login_url='loginview')
 # # @admin_only
