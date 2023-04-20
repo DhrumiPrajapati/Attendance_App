@@ -1,0 +1,38 @@
+{% extends "home.html" %}
+
+{% block content %}
+{% block emp %}
+{% block manager %}
+
+{% if empdata %}
+<div class="emp">
+    <h4 style="text-align: left; margin: 50px 0px 50px 50px;">
+        Senior-Junior Mapping Form
+    </h4>
+
+    <div style="margin-left: 50px;">
+        <form action="{% url 'SrjrMapFormView' %}" method="POST" class="post-form" >
+            {% csrf_token %}
+            {{ form.as_p}}
+
+            <button type="submit" class="save btn btn-primary">Save</button>
+            <!-- <br><br>
+            Employee is missing in the list?
+            <a href="{% url 'EmpForm' %}">Add Employee</a> -->
+        </form>
+    </div>
+</div>
+{% else %}
+<div style="margin-left: 250px; margin-top: 100px; margin-bottom: 50px; font-size: large;">
+    <br>
+      You don't have any employees to select as juniors!!
+</div>
+<div style="margin-left: 250px; margin-bottom: 50px;">
+    <br>
+    Click here to add  
+    <a href="{% url 'EmpForm' %}">employees</a>.
+</div>
+{% endif %}
+{% endblock %}
+{% endblock %}
+{% endblock %}

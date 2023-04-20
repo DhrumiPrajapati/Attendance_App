@@ -1,0 +1,12 @@
+{% autoescape off %}  
+Hi {{ first_name }},  
+Thanks for registering in our application. 
+
+Please click on the below given link to active you account,  
+http://{{ domain }}{% url 'activate' uidb64=uid token=token %}
+
+Thanking you.
+
+Regards, 
+Team AttendanceApp
+{% endautoescape %}  

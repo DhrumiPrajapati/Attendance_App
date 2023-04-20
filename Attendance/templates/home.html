@@ -1,0 +1,281 @@
+{% load static %}
+<!-- Admin Homepage-->
+<!-- block name = content -->
+<!doctype html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Homepage</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  </head>
+
+  <body>
+    <!--<nav class="navbar navbar-expand-lg bg-body-tertiary" style="background-color: darkcyan;">-->
+      <!-- Image and text -->
+      <nav class="navbar navbar-expand-lg nav1">
+        <div class="container-fluid" style="width: fit-content;">
+          <a class="navbar-brand" href="#">
+            <img src="{% static 'images/applogo.jpg' %}" width="45" height="40" class="d-inline-block align-top" alt="" style="margin-left: 28px;">
+          </a>
+        </div>
+
+      <!--<nav class="navbar navbar-expand-lg" style="background-color: #afdeff;">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">
+            <nav class="navbar">
+              <div class="container">
+                <a class="navbar-brand col-md" href="#">
+                  <img class="d-inline-block align-top" src="{% static 'images/logo.png' %}" alt="Bootstrap" width="40" height="35">
+                </a>
+              </div>
+            </nav>
+          </a>-->
+          
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav">
+              <li class="nav-item" style="margin-left: 15px;">
+                <a class="navbar-brand float-left" href="#">Attendance Application</a>
+              </li>
+            </ul>
+            <ul class="navbar-nav mb-2 mb-lg-0 d-flex" style="position: absolute; right: 0;">
+              <li>
+                <a class="nav-link"  href="#" style="margin-top: 17px; font-size: 17px;">
+                  {% if user.is_authenticated %}
+                  <p>Hello, {{ user.first_name }}!</p>
+                  {% endif %}
+                  <!-- <p>Please log in to see your profile.</p> -->
+                </a>
+              </li>
+              <li>
+                <a href="{% url 'logoutview' %}" class="nav-link" style="margin-top: 17px;">Logout</a>
+              </li>
+              <li class="nav-item" style="margin-top: 17px;">
+                <a class="ml-auto navbar-brand" href="#">
+                  <img src="{% static 'images/user1.png' %}" alt="Bootstrap" width="30" height="30">
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      {% block content %}
+      {% endblock %}
+
+      {% if request.user.is_superuser %}
+
+      <nav class="navbar navbar-expand-lg nav2">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-1" style="min-width: 130px; margin: 0; padding: 0 10px; text-align: center;">
+              <nav class="navbar navbar-default navbar-fixed-side">
+                <ul class="nav navbar-nav">
+
+                  <li class="nav-item list">
+                    <a class="nav-link" href="#">Attendance Details</a>
+                    <div class="side-modal">
+                      <a class="nav-link sm1" href="{% url 'AttFormView' %}">Attendance Form</a>
+                      <a class="nav-link sm1" href="{% url 'AttEntry' %}">Attendance Entries</a>
+                    </div>
+                  </li>
+
+                  <li class="nav-item list" style="margin-bottom: 10px;">
+                    <a class="nav-link" href="#">Employee Details</a>
+                    <div class="side-modal">
+                      <a class="nav-link sm1" href="{% url 'EmpForm' %}">Employee Form</a>
+                      <a class="nav-link sm1" href="{% url 'EmpEntry' %}">Employee Entries</a> 
+                    </div>
+                  </li>
+
+                  <li class="nav-item list" style="margin-bottom: 10px;">
+                    <a class="nav-link" href="#">SrJr Mappings</a>
+                    <div class="side-modal">
+                      <a class="nav-link sm1" href="{% url 'SrjrMapFormView' %}">SrJr Mapping</a>
+                      <a class="nav-link sm1" href="{% url 'SrjrEntry' %}">All SrJr Mappings</a>                    
+                    </div>
+                  </li>
+
+                  <li class="nav-item list" style="margin-bottom: 10px;">
+                    <a class="nav-link" href="#">Client Details</a>
+                    <div class="side-modal">
+                      <a class="nav-link sm1" href="{% url 'ClientForm' %}">Client Form</a>
+                      <a class="nav-link sm1" href="{% url 'ClientEntry' %}">Client Entries</a>                    
+                    </div>
+                  </li>
+
+                  <li class="nav-item list" style="margin-bottom: 10px;">
+                    <a class="nav-link" href="#">Project Details</a>
+                    <div class="side-modal">
+                      <a class="nav-link sm1" href="{% url 'ProjectForm' %}">Project Form</a>
+                      <a class="nav-link sm1" href="{% url 'ProjectEntry' %}">Project Entries</a>
+                    </div>
+                  </li>
+
+                  <li class="nav-item list" style="margin-bottom: 10px;">
+                    <a class="nav-link" href="#">Company Details</a>
+                    <div class="side-modal">
+                      <a class="nav-link sm1" href="{% url 'CompanyDetail' %}">Company Info Form</a>
+                      <a class="nav-link sm1" href="{% url 'CompanyEntry' %}">Company Detail</a>
+                    </div>
+                  </li>
+
+                  <li class="nav-item list" style="margin-bottom: 10px;">
+                    <a class="nav-link" href="#">Approvals of Submissions</a>
+                    <div class="side-modal">
+                      <a class="nav-link sm1" href="#">Pending Tasks</a>
+                      <a class="nav-link sm1" href="#">Completed Tasks</a>
+                    </div>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>  
+      </nav>
+
+      {% elif request.user.is_staff %}
+
+      <nav class="navbar navbar-expand-lg nav2">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-1" style="min-width: 130px; margin: 0; padding: 0 10px; text-align: center;">
+              <nav class="navbar navbar-default navbar-fixed-side">
+                <ul class="nav navbar-nav">
+
+                  <!-- <li class="nav-item list" style="margin-bottom: 10px;">
+                    <a class="nav-link" href="#">Employee Details</a>
+                    <div class="side-modal">
+                      <a class="nav-link sm1" href="{% url 'EmpForm' %}">Employee Form</a>
+                      <a class="nav-link sm1" href="{% url 'EmpEntry' %}">Employee Entries</a> 
+                    </div>
+                  </li> -->
+
+                  <li class="nav-item list">
+                    <a class="nav-link" href="#">Attendance Details</a>
+                    <div class="side-modal">
+                      <a class="nav-link sm1" href="{% url 'AttFormView' %}">Attendance Form</a>
+                      <a class="nav-link sm1" href="{% url 'AttEntry' %}">Attendance Entries</a>
+                    </div>
+                  </li>
+
+                  <li class="nav-item list" style="margin-bottom: 10px;">
+                    <a class="nav-link" href="#">SrJr Mappings</a>
+                    <div class="side-modal">
+                      <a class="nav-link sm1" href="{% url 'SrjrMapFormView' %}">SrJr Mapping</a>
+                      <a class="nav-link sm1" href="{% url 'SrjrEntry' %}">All SrJr Mappings</a>                    
+                    </div>
+                  </li>
+
+                  <li class="nav-item list" style="margin-bottom: 10px;">
+                    <a class="nav-link" href="#">Client Details</a>
+                    <div class="side-modal">
+                      <a class="nav-link sm1" href="{% url 'ClientForm' %}">Client Form</a>
+                      <a class="nav-link sm1" href="{% url 'ClientEntry' %}">Client Entries</a>                    
+                    </div>
+                  </li>
+
+                  <li class="nav-item list" style="margin-bottom: 10px;">
+                    <a class="nav-link" href="#">Project Details</a>
+                    <div class="side-modal">
+                      <a class="nav-link sm1" href="{% url 'ProjectForm' %}">Project Form</a>
+                      <a class="nav-link sm1" href="{% url 'ProjectEntry' %}">Project Entries</a>
+                    </div>
+                  </li>
+
+                  <li class="nav-item list" style="margin-bottom: 10px;">
+                    <a class="nav-link" href="#">Company Details</a>
+                    <div class="side-modal">
+                      <!-- <a class="nav-link sm1" href="{% url 'CompanyDetail' %}">Company Info Form</a> -->
+                      <a class="nav-link sm1" href="{% url 'CompanyEntry' %}">Company Detail</a>
+                    </div>
+                  </li>
+
+                  <li class="nav-item list" style="margin-bottom: 10px;">
+                    <a class="nav-link" href="#">Approvals of Submissions</a>
+                    <div class="side-modal">
+                      <a class="nav-link sm1" href="#">Pending Tasks</a>
+                      <a class="nav-link sm1" href="#">Completed Tasks</a>
+                    </div>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>  
+      </nav>
+
+      {% else %}
+
+      <nav class="navbar navbar-expand-lg nav2">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-1" style="min-width: 130px; margin: 0; padding: 0 10px; text-align: center;">
+              <nav class="navbar navbar-default navbar-fixed-side">
+                <ul class="nav navbar-nav">
+
+                  <li class="nav-item list">
+                    <a class="nav-link" href="#">Attendance Details</a>
+                    <div class="side-modal">
+                      <a class="nav-link sm1" href="{% url 'AttFormView' %}">Attendance Form</a>
+                      <a class="nav-link sm1" href="{% url 'AttEntry' %}">Attendance Entries</a>
+                    </div>
+                  </li>
+
+                  <!-- <li class="nav-item list" style="margin-bottom: 10px;">
+                    <a class="nav-link" href="#">Employee Details</a>
+                    <div class="side-modal">
+                      <a class="nav-link sm1" href="{% url 'EmpForm' %}">Employee Form</a>
+                      <a class="nav-link sm1" href="{% url 'EmpEntry' %}">Employee Entries</a> 
+                    </div>
+                  </li> -->
+
+                  <li class="nav-item list" style="margin-bottom: 10px;">
+                    <a class="nav-link" href="#">SrJr Mappings</a>
+                    <div class="side-modal">
+                      <a class="nav-link sm1" href="{% url 'SrjrMapFormView' %}">SrJr Mapping</a>
+                      <a class="nav-link sm1" href="{% url 'SrjrEntry' %}">All SrJr Mappings</a>                    
+                    </div>
+                  </li>
+
+                  <li class="nav-item list" style="margin-bottom: 10px;">
+                    <a class="nav-link" href="#">Client Project Entries</a>
+                    <div class="side-modal">
+                      <a class="nav-link sm1" href="{% url 'ClientEntry' %}">Client Entries</a>  
+                      <a class="nav-link sm1" href="{% url 'ProjectEntry' %}">Project Entries</a>                  
+                    </div>
+                  </li>
+
+                  <!-- <li class="nav-item list" style="margin-bottom: 10px;">
+                    <a class="nav-link" href="#">Project Details</a>
+                    <div class="side-modal">
+                      <a class="nav-link sm1" href="{% url 'ClientForm' %}">Client Form</a>
+                      <a class="nav-link sm1" href="{% url 'ProjectForm' %}">Project Form</a>
+                      <a class="nav-link sm1" href="{% url 'ProjectEntry' %}">Project Entries</a>
+                    </div>
+                  </li> -->
+
+                  <li class="nav-item list" style="margin-bottom: 10px;">
+                    <a class="nav-link" href="#">Company Details</a>
+                    <div class="side-modal">
+                      <!-- <a class="nav-link sm1" href="{% url 'CompanyDetail' %}">Company Info Form</a> -->
+                      <a class="nav-link sm1" href="{% url 'CompanyEntry' %}">Company Detail</a>
+                    </div>
+                  </li>
+
+                  <li class="nav-item list" style="margin-bottom: 10px;">
+                    <a class="nav-link" href="#">Approvals of Submissions</a>
+                    <div class="side-modal">
+                      <a class="nav-link sm1" href="#">Pending Tasks</a>
+                      <a class="nav-link sm1" href="#">Completed Tasks</a>
+                    </div>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>  
+      </nav>
+      
+      {% endif %}
+  </body>
+</html>

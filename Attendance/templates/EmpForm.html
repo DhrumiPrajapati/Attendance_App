@@ -1,0 +1,35 @@
+{% extends "home.html" %}
+
+{% block content %}
+
+<div class="emp">
+    <h4 style="text-align: left; margin: 50px 0px 50px 50px;">
+        Employee Entry Form
+    </h4>
+
+    <div style="margin-left: 50px;">
+        <h5>
+            Personal Details
+        </h5> 
+        <div class="box">
+            <hr>
+        </div>
+
+        <form action="{% url 'EmpForm' %}" method="POST" class="post-form" >
+            {% csrf_token %}
+            {{ empform1.as_p}}
+
+            <h5>
+                Job Details
+            </h5> 
+            <div class="box">
+                <hr>
+            </div>
+
+            {{ empform2.as_p}}
+            <button type="submit" class="save btn btn-primary">Save</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

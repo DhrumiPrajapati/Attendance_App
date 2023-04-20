@@ -1,0 +1,47 @@
+{% extends "home.html" %}
+
+{% block content %}
+
+<div class="emp">
+    <h4 style="text-align: left; margin: 50px 0px 50px 50px;">
+        Attendance Entry Form
+    </h4>
+
+    <div style="margin-left: 50px;">
+        <h5>
+            My Attendance
+        </h5> 
+        <div class="box">
+            <hr>
+        </div>
+        <form action="{% url 'AttForm' %}" method="POST" class="post-form" >
+            {% csrf_token %}
+            <div class="row">
+                <div class="col">
+                    {{ attform1.senioratt.label_tag}}
+                    {{ attform1.senioratt}}
+                </div>
+                <div class="col">
+                    {{ attform1.tdate.label_tag}}
+                    {{ attform1.tdate}}
+                </div>
+            </div>
+
+            <h5 style="margin-top: 20px;">
+                Junior's Attendance
+            </h5> 
+            <div class="box">
+                <hr>
+            </div>
+            {% for junior in juniors %}
+                <h5>Junior {{ forloop.counter }}</h5>
+                {{ attform2.junioratt.label_tag }}
+                {{ attform2.junioratt }}
+                <input type="hidden" name="junior{{ forloop.counter }}_id" value="{{ junior.id }}">
+            {% endfor %}
+            <button type="submit" class="save btn btn-primary">Save</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

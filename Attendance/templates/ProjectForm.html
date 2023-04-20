@@ -1,0 +1,37 @@
+{% extends "home.html" %}
+
+{% block content %}
+{% block manager %}
+
+<div class="emp">
+    <h4 style="text-align: left; margin: 50px 0px 50px 50px;">
+        Project Entry Form
+    </h4>
+
+    <div style="margin-left: 50px;">
+        <h5>
+            Project Details
+        </h5> 
+        <div class="box">
+            <hr>
+        </div>
+
+        <form action="{% url 'ProjectForm' %}" method="POST" class="post-form" >
+            {% csrf_token %}
+            {{ prjform1.as_p}}
+
+            <h5>
+                Assigned Staff Details
+            </h5> 
+            <div class="box">
+                <hr>
+            </div>
+
+            {{ prjform2.as_p}}
+            <button type="submit" class="save btn btn-primary">Save</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends "home.html" %}
+
+{% block content %}
+{% block emp %}
+{% block manager %}
+
+<div class="emp">
+  <h4 style="text-align: left; margin: 50px 0px 50px 50px;">
+    List of Juniors
+  </h4>
+
+  <!-- <h5 style="margin: 50px 0px 20px 50px;">
+    Additional Details
+  </h5>  -->
+  
+  {% if mapdata %}
+  <table style="margin-left: 55;" class="table">
+    <tbody  class="text-left">
+      <tr>
+        <td><b>Number of juniors: {{ num_juniors }}</b></td>
+      </tr>
+      {% for x in mapdata %}  
+      <tr>
+        <td>{{ x.junior }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+<div style="margin-left: 210px; margin-bottom: 50px;">
+  <br>
+  Click here to add  
+  <a href="{% url 'AttForm' %}">Today's Attendance</a>.
+</div>
+{% else %}
+<div style="margin-left: 50px; margin-bottom: 50px; font-size: large;">
+  <br>
+    Oops! You haven't selected your juniors yet!!
+</div>
+<div style="margin-left: 50px; margin-bottom: 50px;">
+  <br>
+  Click here to select your 
+  <a href="{% url 'SrjrMapFormView' %}">Juniors</a>.
+</div>
+{% endif %}
+{% endblock %}
+{% endblock %}
+{% endblock %}

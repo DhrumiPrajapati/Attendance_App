@@ -1,0 +1,63 @@
+{% extends "home.html" %}
+
+{% block content %}
+{% block manager %}
+{% block emp %}
+
+<div class="emp">
+  <h4 style="text-align: left; margin: 50px 0px 50px 50px;">
+    Project Entries
+  </h4>
+</div>
+
+{% if prjdata %}
+<table border='1' style="margin-left: 200;" class="table text-center">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Client</th>
+      <th scope="col">Prjoect Title</th>
+      <th scope="col">Site Location</th>
+      <th scope="col">Starting Date</th>
+      <th scope="col">Region</th>
+      <th scope="col">Description</th>
+      <th scope="col">Project Head</th>
+      <th scope="col">Region Head</th>
+      <th scope="col">Site Head</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for x in prjdata %}
+    <tr>
+      <td>{{ x.client }}</td>
+      <td>{{ x.prjtitle }}</td>
+      <td>{{ x.siteloc }}</td>
+      <td>{{ x.startdt }}</td>
+      <td>{{ x.region }}</td>
+      <td>{{ x.description }}</td>
+      <td>{{ x.prjhead }}</td>
+      <td>{{ x.regionhead }}</td>
+      <td>{{ x.sitehead }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+
+  </table>
+{% else %}
+  <div style="margin-left: 200px; margin-bottom: 50px; font-size: large;">
+    <br>
+      No data available!  
+  </div>
+  <!-- <div style="margin-left: 200px; margin-bottom: 50px;">
+    <br>
+    Want to add a project?
+    <a href="{% url 'ProjectForm' %}">Add Project</a>
+  </div> -->
+{% endif %}
+{% endblock %}
+<div style="margin-left: 200px; margin-bottom: 50px;">
+  <br>
+  Want to add a project?
+  <a href="{% url 'ProjectForm' %}">Add Project</a>
+</div>
+{% endblock %}
+{% endblock %}

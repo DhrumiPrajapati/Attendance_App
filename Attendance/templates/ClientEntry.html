@@ -1,0 +1,61 @@
+{% extends "home.html" %}
+
+{% block content %}
+{% block manager %}
+{% block emp %}
+
+<div class="emp">
+  <h4 style="text-align: left; margin: 50px 0px 50px 50px;">
+    All Client Entries
+  </h4>
+</div>
+
+{% if clientdata %}
+<table border='1' style="margin-left: 200;" class="table text-center">
+  <thead class="thead-dark">
+    <tr>
+        <th scope="col">Client ID</th>
+        <th scope="col">Client Type</th>
+        <th scope="col">Type of Business</th>
+        <th scope="col">Firstname</th>
+        <th scope="col">Lastname</th>
+        <th scope="col">Preferred Contact Method</th>
+        <th scope="col">Email</th>
+        <th scope="col">Phone</th>
+        <th scope="col">Address</th>
+        <th scope="col">Additional Information</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    {% for x in clientdata %}
+    <tr>
+      <td>{{ x.cid }}</td>
+      <td>{{ x.ctype }}</td>
+      <td>{{ x.typeob }}</td>
+      <td>{{ x.cfirstname }}</td>
+      <td>{{ x.clastname }}</td>
+      <td>{{ x.cpcm }}</td>
+      <td>{{ x.cemail }}</td>
+      <td>{{ x.cphone }}</td>
+      <td>{{ x.caddress }}</td>
+      <td>{{ x.ainfo }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+
+  </table>
+  {% else %}
+  <div style="margin-left: 200px; margin-bottom: 50px; font-size: large;">
+    <br>
+      No data available!  
+  </div>
+{% endif %}
+{% endblock %}
+<div style="margin-left: 200px; margin-bottom: 50px;">
+  <br>
+  Want to add a Client?
+  <a href="{% url 'ClientForm' %}">Add Client</a>
+</div>
+{% endblock %}
+{% endblock %}
