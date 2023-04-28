@@ -1,11 +1,11 @@
 from django.db import models
 from django.utils import timezone
-from datetime import datetime, timezone
+from datetime import datetime
 from django.forms import ValidationError
 from multiselectfield import MultiSelectField
 from django.contrib.auth.models import User
-from django.contrib.auth.models import AbstractUser        
-        
+from django.contrib.auth.models import AbstractUser
+
 # Create your models here.
 #Model for additional fields of SignUp form
 # class UserData(models.Model):
@@ -28,7 +28,7 @@ class Employee(models.Model):
                 ('O-', 'O-'),
                 ('AB+', 'AB+'),
                 ('AB-', 'AB-'),)
-        
+
         DEPT = (('IT','IT'),
                 ('Production','Production'),
                 ('Sales','Sales'),
@@ -36,7 +36,7 @@ class Employee(models.Model):
                 ('Finance','Finance'),
                 ('Marketing','Marketing'),
                 ('Other','Other'),)
-        
+
         DESIG = (('Employee','Employee'),
                 ('Intern','Intern'),
                 ('Site Head','Site Head'),
@@ -48,22 +48,21 @@ class Employee(models.Model):
                 ('CEO','CEO'),
                 ('Owner','Owner'),
                 ('Other','Other'),)
-        
+
         TYPE = (('Permanent Employee','Permanent Employee'),
                 ('Contract Based','Contract Based'),)
-        
+
         MODE = (('Day','Day'),
                 ('Month','Month'),)
-        
+
         # OPTION = (('Yes','Yes'),
         #           ('No','No'),)
-        
+
         ROLES = (('Employee','Employee'),
                  ('Manager','Manager'),
                  ('HR','HR'),)
 
         user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
-
         #personal detail field
         firstname = models.CharField(max_length=20, null=True, verbose_name='First Name')
         lastname = models.CharField(max_length=30, null=True, verbose_name='Last Name')
@@ -88,7 +87,7 @@ class Employee(models.Model):
         # option = models.CharField(choices=OPTION,max_length=20,null=True, default='No', verbose_name='Do the employee have juniors?')
 
         def employee(self):
-                return f"{self.empid} - {self.firstname} {self.lastname}"   
+                return f"{self.empid} - {self.firstname} {self.lastname}"
 
         class Meta:
                 db_table = "Employee"
@@ -103,18 +102,18 @@ class Employee(models.Model):
 class Client(models.Model):
         CTYPE = (('Individual','Individual'),
                 ('Company','Company'),)
-        
+
         TOB = (('Service Provider','Service Provider'),
                 ('Manufacturer','Manufacturer'),
                 ('Consultant','Consultant'),
                 ('Traders and Distributors','Traders and Distributors'),
                 ('Other','Other'))
-        
+
         PCM = (('Email','Email'),
                 ('Phone','Phone'),)
-        
+
         user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
-        
+
         #general detail fields
         cid = models.CharField(max_length=20, null=True, unique=True, verbose_name='Client ID')
         ctype = models.CharField(choices=CTYPE,max_length=20,null=True, default='Individual', verbose_name='Client Type')
@@ -125,7 +124,7 @@ class Client(models.Model):
         #contact detail fields
         cfirstname = models.CharField(max_length=20, null=True, verbose_name='First Name')
         clastname = models.CharField(max_length=30, null=True, verbose_name='Last Name')
-        cpcm = models.CharField(choices=PCM,max_length=50,null=True, default='Phone', verbose_name='Preferred Contact Method')  
+        cpcm = models.CharField(choices=PCM,max_length=50,null=True, default='Phone', verbose_name='Preferred Contact Method')
         cemail = models.EmailField(max_length=20, null=True, verbose_name='Email')
         cphone = models.CharField(max_length=10, null=True, verbose_name='Phone')
         caddress = models.TextField(max_length=50, null=True, verbose_name='Address')
@@ -133,10 +132,10 @@ class Client(models.Model):
 
 
         def client(self):
-                return f"{self.cid} - {self.cfirstname} {self.clastname}"   
-        
+                return f"{self.cid} - {self.cfirstname} {self.clastname}"
+
         class Meta:
-                db_table = "Client"  
+                db_table = "Client"
 
         def __str__(self):
                 if self.cfirstname and self.clastname is not None:
@@ -149,7 +148,7 @@ class Company(models.Model):
 
         OFFLEAVE = (('Saturday','Saturday'),
                     ('Sunday','Sunday'),)
-        
+
         #general details fields
         compname = models.CharField(max_length=20, null=True, verbose_name='Company Name')
         oname = models.CharField(max_length=20, null=True, verbose_name='Company Owner Name')
@@ -160,19 +159,18 @@ class Company(models.Model):
         #additional details fields
         lapm = models.IntegerField(null=True, verbose_name='Leaves allowed per month')
         plgm = models.IntegerField(null=True, verbose_name='Paid Leaves given per month')
-        offleave = MultiSelectField(choices=OFFLEAVE,max_length=50,null=True, verbose_name='Weekend Official Leave')  
+        offleave = MultiSelectField(choices=OFFLEAVE,max_length=50,null=True, verbose_name='Weekend Official Leave')
         # sttime = models.TimeField(auto_now=False, auto_now_add=False, null=True)
         # endtime = models.TimeField(auto_now=False, auto_now_add=False, null=True)
 
         class Meta:
                 db_table = "Company"
-                
+
         def __str__(self):
                 if self.compname is not None:
                         return self.compname + " " + "Data"
                 else:
                         return ""
-
 
 #model for the ProjectForm
 class Project(models.Model):
@@ -207,12 +205,15 @@ class Project(models.Model):
                         return self.prjtitle
                 else:
                         return ""
-        
+
 #model for the Senior-Junior Mapping Form
 class Mapping(models.Model):
 
         user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
-        junior = models.CharField(max_length=255, null=True, verbose_name='Junior')
+        # jid = models.ForeignKey(User,on_delete=models.CASCADE, related_name='user_id', null=True)
+        # junior = models.ForeignKey(Employee, on_delete=models.CASCADE, null=True, verbose_name='Junior')
+        junior = models.CharField(max_length=255, null=True,verbose_name='Junior')
+        # junior = models.ForeignKey(User, on_delete=models.CASCADE, related_name='junior_mappings', null=True, verbose_name='Junior')
 
         class Meta:
                 db_table = "Mapping"
@@ -220,6 +221,7 @@ class Mapping(models.Model):
         def __str__(self):
                 if self.junior is not None:
                         return self.junior
+                        # f"{self.junior.first_name} {self.junior.last_name}"
                 else:
                         return ""
 
@@ -229,20 +231,39 @@ class Attendance(models.Model):
                       ('Half Day','Half Day'),
                       ('Overtime','Overtime'),
                       ('Absent','Absent'),)
-        
-        user = models.ForeignKey(User, on_delete=models.CASCADE)
-        # tdate=models.DateTimeField(auto_now_add=True, verbose_name='Today Date')
-        tdate=models.DateTimeField(default=datetime.now, verbose_name='Today Date')
 
-        #tdate = models.DateTimeField(verbose_name='Today Date', null=True)
-        senioratt = models.CharField(choices=ATTENDANCE, max_length=100, null=True, verbose_name='My Attendance', default='Full Day')
-        juniors = models.ForeignKey(Mapping, on_delete=models.CASCADE, null=True)
-        junioratt = models.CharField(choices=ATTENDANCE, max_length=100, null=True, verbose_name='Attendance', default='Full Day')
+        user = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
+        tdate = models.DateTimeField(default=timezone.now, verbose_name='Today Date', editable=False)
+        # tdate=models.DateTimeField(default=timezone.now, verbose_name='Today Date')
+        attendance = models.CharField(choices=ATTENDANCE, max_length=100, null=True, verbose_name='Attendance', default='Full Day')
+        mapping = models.ForeignKey(Mapping, on_delete=models.CASCADE, default=None, null=True)
+     
         class Meta:
                 db_table = "Attendance"
 
         def __str__(self):
-                if self.senioratt is not None:
-                        return self.senioratt
+                if self.attendance is not None:
+                        return self.attendance
                 else:
                         return ""
+
+# class JrAttendance(models.Model):
+#         ATTENDANCE = (('Full Day','Full Day'),
+#                       ('Half Day','Half Day'),
+#                       ('Overtime','Overtime'),
+#                       ('Absent','Absent'),)
+
+#         user = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
+#         # mapping = models.ForeignKey(Mapping, on_delete=models.CASCADE, null=False)
+#         mapping = models.CharField(max_length=255, null=True,verbose_name='Juniors')
+#         tdate=models.DateTimeField(default=datetime.now, verbose_name='Today Date')
+#         attendance = models.CharField(choices=ATTENDANCE, max_length=100, null=True, verbose_name='Attendance', default='Full Day')
+
+#         class Meta:
+#                 db_table = "JrAttendance"
+
+#         def __str__(self):
+#                 if self.attendance is not None:
+#                         return self.attendance
+#                 else:
+#                         return ""

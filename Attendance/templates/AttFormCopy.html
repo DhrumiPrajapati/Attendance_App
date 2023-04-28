@@ -1,0 +1,173 @@
+{% extends "home.html" %}
+{% load static %}
+
+{% block content %}
+{% block emp %}
+
+<div class="emp">
+    <h4 style="text-align: left; margin: 50px 0px 50px 50px;">
+        Attendance Entry Form
+    </h4>
+
+    <div style="margin-left: 50px;">
+        <h5>
+            My Attendance
+        </h5> 
+        <div class="box">
+            <hr>
+        </div>
+        <form action="{% url 'AttFormView' %}" method="POST" class="post-form" >
+            {% csrf_token %}
+            {{ attform1.as_p }}
+            <h5 style="margin-top: 20px;">
+                Junior's Attendance
+            </h5> 
+            <div class="box">
+                <hr>
+            </div>
+            {% if juniors %}
+
+            <table border='1' style="margin-left: 0;" class="table text-center">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Full Day</th>
+                    <th scope="col">Half Day</th>
+                    <th scope="col">Overtime</th>
+                    <th scope="col">Absent</th>
+                </tr>
+                </thead>
+                <tbody  class="text-left">
+                    {% for junior,attform2 in attform2_list %}
+                    <tr class="text-center">
+                        <td class="col-2 font-weight-bold">{{ junior }}</td>
+                        <td class="col-2 font-weight-bold">{{ attform2.attendance.choices }}</td>
+
+                        {% for choice in attform2.attendance.choices %}
+                            <td>
+                                <input type="radio" name="{{ junior.id }}_attendance" value="{{ choice.0 }}" {% if attform2.initial.attendance == choice.0 %}checked{% endif %}>
+                            </td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+                </table>
+
+            {% else %}
+            <div style="margin-left: 0px; margin-bottom: 25px;">
+            <br>
+                You haven't selected your juniors yet!!
+            </div>
+            <div style="margin-left: 0px; margin-bottom: 50px;">
+            <br>
+            Click here to select your 
+            <a href="{% url 'SrjrMapFormView' %}">Juniors</a>.
+            </div>
+            {% endif %}
+            <!-- {% if juniors %}
+                {% for x in juniors %}
+
+                    <div class="col">
+                        <div class="row font-weight-bold">
+                            {{ x }}
+                        </div>
+                        <br>
+                        <div class="row">
+                            {% for x in juniors %}
+                                {{ attform2.as_p }}
+                            {% endfor %}
+                        </div>
+                    </div>  
+                    <br><br>  
+                {% endfor %}
+                {% else %}
+                <div style="margin-left: 0px; margin-bottom: 25px;">
+                <br>
+                    You haven't selected your juniors yet!!
+                </div>
+                <div style="margin-left: 0px; margin-bottom: 50px;">
+                    <br>
+                    Click here to select your 
+                    <a href="{% url 'SrjrMapFormView' %}">Juniors</a>.
+                </div>
+                {% endif %} -->
+    
+                <div class="col">
+                    <button type="submit" class="save btn btn-primary">Send Approval</button>
+                </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+{% endblock %}
+
+{% extends "home.html" %}
+
+{% block content %}
+{% block emp %}
+
+<div class="emp">
+    <h4 style="text-align: left; margin: 50px 0px 50px 50px;">
+        Attendance Entry Form
+    </h4>
+
+    <div style="margin-left: 50px;">
+        <h5>
+            My Attendance
+        </h5> 
+        <div class="box">
+            <hr>
+        </div>
+        <form action="{% url 'AttFormView' %}" method="POST" class="post-form">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col">
+                    {{ attform1.attendance}}
+                </div>
+                <div class="col">
+                    {{ attform1.tdate.label_tag}}
+                    {{ attform1.tdate}}
+                </div>
+            </div>
+            <h5 style="margin-top: 20px;">
+                Junior's Attendance
+            </h5> 
+            <div class="box">
+                <hr>
+            </div>
+            {% if juniors %}
+                {% for x in juniors %}
+
+                    <div class="col">
+                        <div class="row font-weight-bold">
+                            {{ x }}
+                        </div>
+                        <br>
+                        <div class="row">
+                            {{ attform2.attendance }}
+                        </div>
+                    </div>  
+                    <br><br>  
+                {% endfor %}
+                {% else %}
+                <div style="margin-left: 0px; margin-bottom: 25px;">
+                <br>
+                    You haven't selected your juniors yet!!
+                </div>
+                <div style="margin-left: 0px; margin-bottom: 50px;">
+                <br>
+                Click here to select your 
+                <a href="{% url 'SrjrMapFormView' %}">Juniors</a>.
+                </div>
+                {% endif %}
+    
+                <div class="col">
+                    <button type="submit" class="save btn btn-primary">Send Approval</button>
+                </div>
+            </form>
+    </div>
+</div>
+
+{% endblock %}
+{% endblock %}

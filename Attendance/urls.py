@@ -16,6 +16,7 @@ urlpatterns = [
     path('ProjectEntry/',views.ProjectEntry,name='ProjectEntry'),
     path('SrjrMapFormView/',views.SrjrMapFormView,name='SrjrMapFormView'),
     path('SrjrEntry/',views.SrjrEntry,name='SrjrEntry'),
+    # path('AttFormView/', views.AttFormView.as_view(), name='AttFormView'),
     path('AttFormView/',views.AttFormView,name='AttFormView'),
     path('AttEntry/',views.AttEntry,name='AttEntry'),
     # path('signin/',views.signin,name='signin'),

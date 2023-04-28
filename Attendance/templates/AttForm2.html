@@ -1,8 +1,8 @@
 {% extends "home.html" %}
+{% load static %}
 
 {% block content %}
 {% block emp %}
-{% block manager %}
 
 <div class="emp">
     <h4 style="text-align: left; margin: 50px 0px 50px 50px;">
@@ -16,16 +16,15 @@
         <div class="box">
             <hr>
         </div>
-        <form action="{% url 'AttForm' %}" method="POST" class="post-form" >
+        <form action="{% url 'AttFormView' %}" method="POST" class="post-form" >
             {% csrf_token %}
             <div class="row">
                 <div class="col">
-                    {{ attform1.senioratt.label_tag}}
-                    {{ attform1.senioratt}}
+                    {{ form.attendance}}
                 </div>
                 <div class="col">
-                    {{ attform1.tdate.label_tag}}
-                    {{ attform1.tdate}}
+                    {{ form.tdate.label_tag}}
+                    {{ form.tdate}}
                 </div>
             </div>
 
@@ -36,36 +35,50 @@
                 <hr>
             </div>
 
-            {% if attform2 %}
-                <table border='1' style="margin-left: 0;" class="table text-center">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th scope="col">Name</th>
-                            <th scope="col">Full Day</th>
-                            <th scope="col">Half Day</th>
-                            <th scope="col">Absent</th>
-                            <th scope="col">Overtime</th>
-                        </tr>
-                    </thead>
-                    <tbody  class="text-left">
-                        {% for junior in attform2.juniors %}
-                            <tr class="text-center">
-                                <td class="col-2 font-weight-bold">{{ junior }}</td>
-                                {% for choice in attform2.junioratt.choices %}
-                                    <td><input type="radio" name="{{ junior.id }}_attendance" value="{{ choice.0 }}" {% if attform2.initial.junior_attendance == choice.0 %}checked{% endif %}></td>
-                                {% endfor %}
-                            </tr>
+            {% if juniors %}
+
+            <table border='1' style="margin-left: 0;" class="table text-center">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Full Day</th>
+                    <th scope="col">Half Day</th>
+                    <th scope="col">Overtime</th>
+                    <th scope="col">Absent</th>
+                  </tr>
+                </thead>
+                <tbody  class="text-left">
+                {% for x in juniors %}
+                    <tr class="text-center">
+                        <td class="col-2 font-weight-bold">{{ x }}</td>
+                        {% for choice in form.fields.attendance.choices %}
+                            <td><input type="radio" name="{{ x.id }}_attendance" value="{{ choice.0 }}" {% if form.initial.attendance == choice.0 %}checked{% endif %}></td>
                         {% endfor %}
-                    </tbody>
+                        <!-- <td><input type="radio" name="{{ x.id }}_attendance" value="Full Day"></td>
+                        <td><input type="radio" name="{{ x.id }}_attendance" value="Half Day"></td>
+                        <td><input type="radio" name="{{ x.id }}_attendance" value="Absent"></td>
+                        <td><input type="radio" name="{{ x.id }}_attendance" value="Overtime"></td>  -->
+                    </tr>
+                {% endfor %}
+                </tbody>
+
                 </table>
+
+            {% else %}
+            <div style="margin-left: 0px; margin-bottom: 25px;">
+            <br>
+                You haven't selected your juniors yet!!
+            </div>
+            <div style="margin-left: 0px; margin-bottom: 50px;">
+            <br>
+            Click here to select your 
+            <a href="{% url 'SrjrMapFormView' %}">Juniors</a>.
+            </div>
             {% endif %}
-
-
             <button type="submit" class="save btn btn-primary">Save</button>
         </form>
     </div>
 </div>
 
-{% endblock %}
 {% endblock %}
 {% endblock %}

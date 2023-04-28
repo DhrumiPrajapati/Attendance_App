@@ -9,6 +9,7 @@ admin.site.register(Company)
 admin.site.register(Project)
 admin.site.register(Mapping)
 admin.site.register(Attendance)
+# admin.site.register(JrAttendance)
 
 # @admin.register(UserData)
 # class UserDataAdmin(admin.ModelAdmin):

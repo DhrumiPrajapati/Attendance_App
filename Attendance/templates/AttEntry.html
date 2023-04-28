@@ -1,48 +1,56 @@
 {% extends "home.html" %}
+{% load static %}
 
 {% block content %}
 {% block emp %}
 {% block manager %}
 
+
 <div class="emp">
   <h4 style="text-align: left; margin: 50px 0px 50px 50px;">
     All Attendance Entries
   </h4>
-</div>
+  {% if attdata %}
 
-{% if attdata %}
-<table border='1' style="margin-left: 200;" class="table text-center">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">Date</th>
-      <th scope="col">My Attendance</th>
-      <th scope="col">Junior's Attendance</th>
-    </tr>
-  </thead>
-  <tbody>
+  <table border='1' style="margin-left: 55;" class="table text-center">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Entry filled by</th>
+        <th scope="col">Junior Id</th>
+        <th scope="col">Date</th>
+        <th scope="col">My Attendance</th>
+      </tr>
+    </thead>
+    <tbody>
 
-    {% for x in attdata %}
-    <tr>
-      <td>{{ x.tdate }}</td>
-      <td>{{ x.senioratt }}</td>
-      <td>{{ x.junioratt }}</td>
-    </tr>
-  {% endfor %}
-  </tbody>
-
+      {% for x in attdata %}
+      <tr>
+        <td>{{ x.user.get_full_name }}</td>
+        <td>{{ x.mapping }}</td>
+        <td>{{ x.tdate }}</td>
+        <td>{{ x.attendance }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
   </table>
+</div>
 
-{% else %}
-<div style="margin-left: 200px; margin-bottom: 50px; font-size: large;">
+<!-- <div style="margin-left: 210px; margin-bottom: 50px;">
   <br>
-    No data available!  
-</div>
-{% endif %}
-<div style="margin-left: 200px; margin-bottom: 50px;">
-  <br>
-  Click here to add  
+    Click here to add  
   <a href="{% url 'AttFormView' %}">Today's Attendance</a>.
-</div>
+</div> -->
+{% else %}
+  <div style="margin-left: 50px; margin-bottom: 50px; font-size: large;">
+    <br>
+      You haven't submitted the attendance yet!!
+  </div>
+  <div style="margin-left: 50px; margin-bottom: 50px;">
+    <br>
+    Click here to add your 
+    <a href="{% url 'AttFormView' %}">Attendance Record</a>.
+  </div>
+{% endif %}
 {% endblock %}
 {% endblock %}
 {% endblock %}

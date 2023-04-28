@@ -1,4 +1,5 @@
 {% extends "home.html" %}
+{% load static %}
 
 {% block content %}
 {% block emp %}
@@ -15,53 +16,45 @@
         <div class="box">
             <hr>
         </div>
-        <form action="{% url 'AttFormView' %}" method="POST" class="post-form" >
+        <form action="{% url 'AttFormView' %}" method="POST" class="post-form">
             {% csrf_token %}
             <div class="row">
                 <div class="col">
-                    {{ attform1.senioratt.label_tag}}
-                    {{ attform1.senioratt}}
+                    {{ attform1.attendance}}
                 </div>
                 <div class="col">
-                    {{ attform1.tdate.label_tag}}
-                    {{ attform1.tdate}}
+                    {{ attform1.fields.tdate.label_tag }}
+                    {{ attform1.fields.tdate }}
                 </div>
             </div>
-
             <h5 style="margin-top: 20px;">
                 Junior's Attendance
             </h5> 
             <div class="box">
                 <hr>
             </div>
-
-            {% if map_data %}
+            {% if juniors %}
 
             <table border='1' style="margin-left: 0;" class="table text-center">
                 <thead class="thead-dark">
-                  <tr>
+                <tr>
                     <th scope="col">Name</th>
                     <th scope="col">Full Day</th>
                     <th scope="col">Half Day</th>
                     <th scope="col">Overtime</th>
                     <th scope="col">Absent</th>
-                  </tr>
+                </tr>
                 </thead>
                 <tbody  class="text-left">
-                {% for x in juniors %}
+                    {% for x in juniors %}
                     <tr class="text-center">
-                        <td class="col-2 font-weight-bold">{{ x }}</td>
-                        {% for choice in attform2.fields.junioratt.choices %}
-                            <td><input type="radio" name="{{ x.id }}_attendance" value="{{ choice.0 }}" {% if attform2.initial.junior_attendance == choice.0 %}checked{% endif %}></td>
+                        <td class="col-2 font-weight-bold">{{ x }}</td>     
+                        {% for choice in attform2.fields.attendance.choices %}                   
+                        <td><input type="radio" name="{{ x.id }}_attendance" value="{{ choice.0 }}" {% if form.initial.attendance == choice.0 %}checked{% endif %}></td>
                         {% endfor %}
-                        <!-- <td><input type="radio" name="{{ x.id }}_attendance" value="Full Day"></td>
-                        <td><input type="radio" name="{{ x.id }}_attendance" value="Half Day"></td>
-                        <td><input type="radio" name="{{ x.id }}_attendance" value="Absent"></td>
-                        <td><input type="radio" name="{{ x.id }}_attendance" value="Overtime"></td>  -->
                     </tr>
                 {% endfor %}
                 </tbody>
-              
                 </table>
 
             {% else %}
@@ -74,8 +67,10 @@
             Click here to select your 
             <a href="{% url 'SrjrMapFormView' %}">Juniors</a>.
             </div>
-            {% endif %}
-            <button type="submit" class="save btn btn-primary">Save</button>
+            {% endif %}    
+                <div class="col">
+                    <button type="submit" class="save btn btn-primary">Send Approval</button>
+                </div>
         </form>
     </div>
 </div>
