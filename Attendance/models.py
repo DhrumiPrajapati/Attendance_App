@@ -212,6 +212,9 @@ class Mapping(models.Model):
         user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
         # jid = models.ForeignKey(User,on_delete=models.CASCADE, related_name='user_id', null=True)
         # junior = models.ForeignKey(Employee, on_delete=models.CASCADE, null=True, verbose_name='Junior')
+        # firstname = models.CharField(max_length=20, null=True, verbose_name='First Name')
+        # lastname = models.CharField(max_length=30, null=True, verbose_name='Last Name')
+        # empid = models.CharField(max_length=20, null=True, unique=True, verbose_name='Employee ID')
         junior = models.CharField(max_length=255, null=True,verbose_name='Junior')
         # junior = models.ForeignKey(User, on_delete=models.CASCADE, related_name='junior_mappings', null=True, verbose_name='Junior')
 
@@ -246,24 +249,3 @@ class Attendance(models.Model):
                         return self.attendance
                 else:
                         return ""
-
-# class JrAttendance(models.Model):
-#         ATTENDANCE = (('Full Day','Full Day'),
-#                       ('Half Day','Half Day'),
-#                       ('Overtime','Overtime'),
-#                       ('Absent','Absent'),)
-
-#         user = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
-#         # mapping = models.ForeignKey(Mapping, on_delete=models.CASCADE, null=False)
-#         mapping = models.CharField(max_length=255, null=True,verbose_name='Juniors')
-#         tdate=models.DateTimeField(default=datetime.now, verbose_name='Today Date')
-#         attendance = models.CharField(choices=ATTENDANCE, max_length=100, null=True, verbose_name='Attendance', default='Full Day')
-
-#         class Meta:
-#                 db_table = "JrAttendance"
-
-#         def __str__(self):
-#                 if self.attendance is not None:
-#                         return self.attendance
-#                 else:
-#                         return ""

@@ -269,6 +269,7 @@ def ProjectEntry(request):
 #         form = SrjrMapForm(user=request.user)
 #     return render(request, "SrjrMapForm.html", {'form': form, 'map_data': map_data, 'empdata':empdata,})
 
+
 # Senior-Junior Mapping Form View
 @login_required(login_url='loginview')
 @never_cache
@@ -279,6 +280,9 @@ def SrjrMapFormView(request):
     if request.method == 'POST':
         form = SrjrMapForm(request.user, request.POST)
         if form.is_valid():
+            # form.empid = empdata.empid
+            # form.firstname = empdata.firstname
+            # form.lastname = empdata.lastname
             form.save()
             return redirect('SrjrEntry')
     else:

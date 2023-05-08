@@ -155,6 +155,7 @@ class SrjrMapForm(forms.ModelForm):
     class Meta:
         model = Mapping
         fields = ['junior']
+        # exclude = ['firstname','lastname','empid']
 
 # class SrjrMapForm(forms.ModelForm):
 #     junior = forms.MultipleChoiceField(choices=[], widget=forms.CheckboxSelectMultiple(),label='Select Junior(s)')
@@ -259,4 +260,3 @@ class AttForm2(forms.ModelForm):
 
 ##juniors = mappings
 ##mappings=jrs
-        

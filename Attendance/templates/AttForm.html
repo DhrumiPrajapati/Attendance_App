@@ -27,13 +27,14 @@
                     {{ attform1.fields.tdate }}
                 </div>
             </div>
+            {% if juniors %}
+
             <h5 style="margin-top: 20px;">
                 Junior's Attendance
             </h5> 
             <div class="box">
                 <hr>
             </div>
-            {% if juniors %}
 
             <table border='1' style="margin-left: 0;" class="table text-center">
                 <thead class="thead-dark">
@@ -56,21 +57,26 @@
                 {% endfor %}
                 </tbody>
                 </table>
-
+                <div style="margin-top: 10px;">
+                    <button type="submit" class="save btn btn-primary">Send Approval</button>
+                </div>
             {% else %}
-            <div style="margin-left: 0px; margin-bottom: 25px;">
+            <div style="margin-top: 10px;">
+                <button type="submit" class="save btn btn-primary">Send Approval</button>
+            </div>
+
+            <div style="margin-left: 0px; margin-top: 25px;">
             <br>
-                You haven't selected your juniors yet!!
+                You haven't selected your juniors!!
             </div>
             <div style="margin-left: 0px; margin-bottom: 50px;">
             <br>
-            Click here to select your 
+            Click here to add your 
             <a href="{% url 'SrjrMapFormView' %}">Juniors</a>.
-            </div>
-            {% endif %}    
-                <div class="col">
-                    <button type="submit" class="save btn btn-primary">Send Approval</button>
-                </div>
+            </div>   
+
+            {% endif %} 
+
         </form>
     </div>
 </div>
