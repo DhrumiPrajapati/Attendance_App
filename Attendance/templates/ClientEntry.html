@@ -15,16 +15,24 @@
 <table border='1' style="margin-left: 200;" class="table text-center">
   <thead class="thead-dark">
     <tr>
-        <th scope="col">Client ID</th>
+        <!-- <th scope="col">Client ID</th>
+        <th scope="col">Name</th>
         <th scope="col">Client Type</th>
         <th scope="col">Type of Business</th>
-        <th scope="col">Firstname</th>
-        <th scope="col">Lastname</th>
         <th scope="col">Preferred Contact Method</th>
-        <th scope="col">Email</th>
-        <th scope="col">Phone</th>
-        <th scope="col">Address</th>
-        <th scope="col">Additional Information</th>
+        <th scope="col">Contact Details</th>
+        <th width="15px">Address</th>
+        <th scope="col">Update</th>
+        <th scope="col">Delete</th> -->
+        <th width="10px">Client ID</th>
+        <th width="30px">Name</th>
+        <th width="15px">Client Type</th>
+        <!-- <th width="20px">Type of Business</th> -->
+        <th width="10px">Preferred Contact Method</th>
+        <th width="8px">Contact Details</th>
+        <th width="15px">Address</th>
+        <th width="10px">Update</th>
+        <th width="10px">Delete</th>
     </tr>
   </thead>
   <tbody>
@@ -32,15 +40,14 @@
     {% for x in clientdata %}
     <tr>
       <td>{{ x.cid }}</td>
-      <td>{{ x.ctype }}</td>
-      <td>{{ x.typeob }}</td>
-      <td>{{ x.cfirstname }}</td>
-      <td>{{ x.clastname }}</td>
+      <td>{{ x.cfirstname }} {{ x.clastname }}</td>
+      <td>{{ x.ctype }} ({{ x.typeob }})</td>
+      <!-- <td></td> -->
       <td>{{ x.cpcm }}</td>
-      <td>{{ x.cemail }}</td>
-      <td>{{ x.cphone }}</td>
+      <td>{{ x.cemail }}, {{ x.cphone }}</td>
       <td>{{ x.caddress }}</td>
-      <td>{{ x.ainfo }}</td>
+      <td><a href="#" class="btn btn-outline-success btn-sm">Update</a></td>
+      <td><a href="{% url 'ClientDelete' x.pk %}" class="btn btn-outline-danger btn-sm">Delete</a></td>
     </tr>
   {% endfor %}
   </tbody>

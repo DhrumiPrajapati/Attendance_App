@@ -13,43 +13,35 @@
 <table border='1' style="margin-left: 200;" class="table text-center">
   <thead class="thead-dark">
     <tr>
-      <th scope="col">Firstname</th>
-      <th scope="col">Lastname</th>
-      <th scope="col">Email</th>
-      <th scope="col">Phone</th>
+      <th scope="col">Employee ID</th>
+      <th scope="col">Name</th>
+      <th scope="col">Contact Details</th>
       <th scope="col">Address</th>
       <th scope="col">Bloodgroup</th>
-      <th scope="col">Emergency Contact Name</th>
-      <th scope="col">Emergency Contact Number</th>
-      <th scope="col">Employee ID</th>
+      <th scope="col">Emergency Contact Details</th>
       <th scope="col">Date of Joining</th>
-      <th scope="col">Department</th>
-      <th scope="col">Designation</th>
+      <th scope="col">Department - Designation</th>
       <th scope="col">Employment Type</th>
       <th scope="col">Salary</th>
-      <th scope="col">Per</th>
-      <!-- <th scope="col">Have Jr?</th> -->
+      <th scope="col">Update Record</th>
+      <th scope="col">Delete Record</th>
     </tr>
   </thead>
   <tbody>
     {% for x in empdata %}
     <tr>
-      <td>{{ x.firstname }}</td>
-      <td>{{ x.lastname }}</td>
-      <td>{{ x.email }}</td>
-      <td>{{ x.phone }}</td>
+      <td>{{ x.empid }}</td>
+      <td>{{ x.firstname }} {{ x.lastname }}</td>
+      <td>{{ x.email }}, {{ x.phone }}</td>
       <td>{{ x.address }}</td>
       <td>{{ x.bloodgroup }}</td>
-      <td>{{ x.econtactname }}</td>
-      <td>{{ x.econtactphone }}</td>
-      <td>{{ x.empid }}</td>
+      <td>{{ x.econtactname }} - {{ x.econtactphone }}</td>
       <td>{{ x.doj }}</td>
-      <td>{{ x.department }}</td>
-      <td>{{ x.designation }}</td>
+      <td>{{ x.department }} - {{ x.designation }}</td>
       <td>{{ x.emptype }}</td>
-      <td>{{ x.salary }}</td>
-      <td>{{ x.per }}</td>
-      <!-- <td>{{ x.option }}</td> -->
+      <td>{{ x.salary }}/- per {{ x.per }}</td>
+      <td><a href="#" class="btn btn-outline-success btn-sm">Update</a></td>
+      <td><a href="{% url 'EmpDelete' x.pk %}" class="btn btn-outline-danger btn-sm">Delete</a></td>
     </tr>
     {% endfor %}
   </tbody>

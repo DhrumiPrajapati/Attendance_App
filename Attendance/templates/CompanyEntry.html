@@ -82,18 +82,18 @@
     </table>
   </div>
 {% else %}
-<div style="margin-left: 50px; margin-bottom: 50px; font-size: large;">
+<div style="margin-left: 50px; margin-bottom: 0px; font-size: large;">
   <br>
     No data available!  
 </div>
-{% endif %}
-{% endblock %}
 <div style="margin-left: 50px; margin-bottom: 50px;">
   <br>
   Click here to add  
   <a href="{% url 'CompanyDetail' %}">Company's Details</a>.
 </div>
 
-
+{% endif %}
 {% endblock %}
+{% endblock %}
+
 {% endblock %}

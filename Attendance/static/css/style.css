@@ -15,16 +15,16 @@ li a{
   padding: 0.1rem;
 }
 
-.nav1{
-  background-color:rgb(222, 232, 242);
+.nav1 {
+  /* background-color:rgb(222, 232, 242); */
   position: fixed;
   width: 100%;
   top: 0;
   left: 0;
 }
 
-.nav2{ 
-  background-color: #e0cdfe;
+.nav2 { 
+  /* background-color: #e0cdfe; */
   padding: 0.1rem;
   position: fixed;
   top: 53px;
@@ -45,7 +45,8 @@ li a{
 }
 
 .list:hover{
-  background-color: #d4bcfd;
+  /* background-color: #d4bcfd; */
+  background-color: #8ec0fd;
   text-decoration: none;
 }
 
@@ -61,7 +62,8 @@ li a{
   width: 170px;
   left: 100%;
   position: absolute;
-  background-color: #d4bcfd;
+  /* background-color: #d4bcfd; */
+  background-color: #8ec0fd;
 }
 
 .box{
@@ -81,7 +83,8 @@ hr{
 }
 
 .sm1:hover{
-  background-color: #c9abfc;
+  /* background-color: #c9abfc; */
+  background-color: #8ec0fd;
 }
 
 table{

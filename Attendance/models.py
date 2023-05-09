@@ -5,6 +5,8 @@ from django.forms import ValidationError
 from multiselectfield import MultiSelectField
 from django.contrib.auth.models import User
 from django.contrib.auth.models import AbstractUser
+from django.db.models.signals import pre_delete, post_save
+from django.dispatch import receiver
 
 # Create your models here.
 #Model for additional fields of SignUp form
@@ -97,6 +99,12 @@ class Employee(models.Model):
                         return self.firstname + " " + self.lastname
                 else:
                         return ""
+                
+# @receiver(pre_delete, sender=Employee)
+# def delete_user(sender, instance, **kwargs):
+# #Delete the corresponding User instance when an Employee instance is being deleted
+#         if instance.user:
+#                 instance.user.delete()
 
 # #Model for the ClientForm
 class Client(models.Model):

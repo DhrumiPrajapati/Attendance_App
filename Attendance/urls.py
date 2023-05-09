@@ -1,11 +1,15 @@
+from django import urls
 from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.decorators import login_required
+
 # from .views import activate  
 
 urlpatterns = [
     path('home/',views.home,name='home'),
+    path('tasklist/',views.tasklist,name='tasklist'),
+    path('userdata',views.userdata,name='userdata'),
     path('ClientForm/',views.ClientForm,name='ClientForm'),
     path('ClientEntry/',views.ClientEntry,name='ClientEntry'),
     path('EmpForm',views.EmpForm,name='EmpForm'),
@@ -32,4 +36,10 @@ urlpatterns = [
     path('reset/<uidb64>/<token>/',auth_views.PasswordResetConfirmView.as_view(template_name="password_reset_form.html"),name='password_reset_confirm'),
     path('reset_password_complete/',auth_views.PasswordResetCompleteView.as_view(template_name="reset_password_complete.html"),name='password_reset_complete'),
     path('emp_home/',views.emp_home,name='emp_home'),
+    path('empdelete/<int:pk>/',views.EmpDelete, name='EmpDelete'),
+    path('',views.EmpList, name='EmpList'),
+    path('clidelete/<int:pk>/',views.ClientDelete, name='ClientDelete'),
+    path('',views.ClientList, name='ClientList'),
+    path('prjdelete/<int:pk>/',views.ProjectDelete, name='ProjectDelete'),
+    path('',views.ProjectList, name='ProjectList'),
 ]

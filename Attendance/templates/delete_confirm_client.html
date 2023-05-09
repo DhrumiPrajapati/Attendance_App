@@ -1,0 +1,30 @@
+{% extends "home.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <form method="POST">
+        {% csrf_token %}
+        <div style="margin-top: 130px;">
+            <div class="card border-danger mt-5">
+                <div class="card-header bg-danger text-white">
+                  <h4 class="m-0">Delete Client</h4>
+                </div>
+                <div class="text-center" style="font-size: 20px; padding: 5px 5px 5px 5px;">
+                  Are you sure you want to delete the record of <br>
+                   "<b>ID:</b> {{object.cid}} - <b>Name:</b> {{ object }}"?
+                </div>
+                <div class="card-footer text-center">
+                  <input type="submit" class="btn btn-danger mr-2" value="Yes" />
+                  <a href="{% url 'ClientEntry' %}" class="btn btn-secondary">Cancel</a>
+                </div>
+              </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

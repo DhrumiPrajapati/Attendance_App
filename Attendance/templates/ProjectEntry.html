@@ -24,6 +24,8 @@
       <th scope="col">Project Head</th>
       <th scope="col">Region Head</th>
       <th scope="col">Site Head</th>
+      <th scope="col">Update Record</th>
+      <th scope="col">Delete Record</th>
     </tr>
   </thead>
   <tbody>
@@ -38,6 +40,8 @@
       <td>{{ x.prjhead }}</td>
       <td>{{ x.regionhead }}</td>
       <td>{{ x.sitehead }}</td>
+      <td><a href="#" class="btn btn-outline-success btn-sm">Update</a></td>
+      <td><a href="{% url 'ProjectDelete' x.pk %}" class="btn btn-outline-danger btn-sm">Delete</a></td>
     </tr>
   {% endfor %}
   </tbody>

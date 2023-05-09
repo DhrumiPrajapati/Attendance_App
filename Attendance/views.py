@@ -6,7 +6,7 @@ from email.message import EmailMessage
 from django.contrib import messages
 from django.forms import PasswordInput
 from django.template import loader
-from django.shortcuts import render,redirect
+from django.shortcuts import get_object_or_404, render,redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from Attendance.form import *
 from .models import *
@@ -34,22 +34,90 @@ from django.contrib.auth.models import Group
 # from django.utils import timezone
 from pytz import timezone
 
+from django.views.generic import ListView, DetailView
+from django.views.generic.edit import DeleteView
+
 # Create your views here.
 
 #home template view
-# @login_required(login_url='loginview')
-# @never_cache
-# def home(request):
-#     template = loader.get_template('home.html')
-#     context = {'username': request.user.username}
-#     return HttpResponse(template.render(context, request))
-
 @login_required(login_url='loginview')
 @never_cache
 def home(request):
-    groups = request.user.groups.values_list('name', flat=True)
-    context = {'groups': groups, 'username': request.user.username}
-    return render(request, 'home.html', context)
+    template = loader.get_template('home.html')
+    context = {'username': request.user.username}
+    return HttpResponse(template.render(context, request))
+
+# #tasks template view
+# @login_required(login_url='loginview')
+# @never_cache
+# def tasklist(request):
+#     template = loader.get_template('TaskList.html')
+#     context = {'username': request.user.username}
+#     return HttpResponse(template.render(context, request))
+
+# @login_required(login_url='loginview')
+# @never_cache
+# def tasklist(request):
+#     juniors = Mapping.objects.filter(user=request.user)
+#     data = Attendance.objects.filter(user=request.user, mapping__junior__isnull=False)
+#     template = loader.get_template('TaskList.html')
+#     context = {
+#         'username': request.user.username,
+#         'attdata': data,
+#         'juniors': juniors,
+#     }
+#     return HttpResponse(template.render(context, request))
+
+#tasklist
+@login_required(login_url='loginview')
+@never_cache
+def tasklist(request):
+    logged_in_user = request.user
+    junior_ids = Mapping.objects.filter(user=logged_in_user).values_list('junior', flat=True)
+    att_data = Attendance.objects.filter(user__id__in=junior_ids, mapping=None)
+    template = loader.get_template('TaskList.html')
+    context = {'att_data': att_data, 'username': request.user.username, 'junior_ids':junior_ids}
+    return HttpResponse(template.render(context, request))
+
+#user_data view
+@login_required(login_url='loginview')
+@never_cache
+def userdata(request):
+    # Get the employee object matching the user's email ID
+    user = request.user
+    employee = None
+
+    # If the user is a superuser, show their details
+    if user.is_superuser:
+        context = {'user': user}
+    # If the user is an employee, show their details
+    else:
+        employee = get_object_or_404(Employee, email=user.username)
+        context = {'employee': employee, 'user': user}
+
+    template = loader.get_template('userdata.html')
+    return HttpResponse(template.render(context, request))
+
+# @login_required(login_url='loginview')
+# @never_cache
+# def userdata(request):
+#     # Get the employee object matching the user's email ID
+#     user = request.user
+#     employee = get_object_or_404(Employee, email=request.user.username)
+
+#     template = loader.get_template('userdata.html')
+#     context = {'username': request.user.username, 'employee': employee, 'user':user}
+#     return HttpResponse(template.render(context, request))
+
+
+
+
+# class EmpDelete(DeleteView):
+#     model = Employee
+#     success_url = reverse_lazy('EmpList')
+#     template_name = 'Attendance/templates/delete_confirm.html'
+
+
 
 #emp_home template view
 @login_required(login_url='loginview')
@@ -178,6 +246,20 @@ def EmpEntry(request):
 
     return HttpResponse(template.render(context, request))
 
+#for delete emp record
+def EmpList(request, template_name='EmpEntry.html'):
+    emp = Employee.objects.all()
+    data = {}
+    data['EmpList'] = emp
+    return render(request, template_name, data)
+
+def EmpDelete(request, pk, template_name='delete_confirm_emp.html'):
+    emp= get_object_or_404(Employee, pk=pk)    
+    if request.method=='POST':
+        emp.delete()
+        return redirect('EmpEntry')
+    return render(request, template_name, {'object':emp})
+
 # Client Form View
 @login_required(login_url='loginview')
 @never_cache
@@ -215,6 +297,19 @@ def ClientEntry(request):
 
     return HttpResponse(template.render(context, request))
 
+def ClientList(request, template_name='ClientEntry.html'):
+    cli = Client.objects.all()
+    data = {}
+    data['ClientList'] = cli
+    return render(request, template_name, data)
+
+def ClientDelete(request, pk, template_name='delete_confirm_client.html'):
+    cli= get_object_or_404(Client, pk=pk)    
+    if request.method=='POST':
+        cli.delete()
+        return redirect('ClientEntry')
+    return render(request, template_name, {'object':cli})
+
 #Project Form View
 @login_required(login_url='loginview')
 @never_cache
@@ -248,6 +343,19 @@ def ProjectEntry(request):
     }
 
     return HttpResponse(template.render(context, request))
+
+def ProjectList(request, template_name='ProjectEntry.html'):
+    prj = Project.objects.all()
+    data = {}
+    data['ProjectList'] = prj
+    return render(request, template_name, data)
+
+def ProjectDelete(request, pk, template_name='delete_confirm_prj.html'):
+    prj= get_object_or_404(Project, pk=pk)    
+    if request.method=='POST':
+        prj.delete()
+        return redirect('ProjectEntry')
+    return render(request, template_name, {'object':prj})
 
 # @login_required(login_url='loginview')
 # @never_cache
@@ -361,7 +469,7 @@ def CompanyDetail(request):
     company = Company()  # create an object for the shared model
     entry_count = Company.objects.count()
     if entry_count == 1:
-        return render(request, template_name="error.html", context={"error":"You cannot add more than 1 entry, you need to delete the previous one!"})
+        return render(request, template_name="error.html", context={"error":"You can add only 1 entry, you need to delete the previous one!"})
 
     if request.method == 'POST':
         compform1 = CompForm1(request.POST, instance=company)  # pass the object to both forms
