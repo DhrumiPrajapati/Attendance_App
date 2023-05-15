@@ -40,7 +40,7 @@
       <td>{{ x.prjhead }}</td>
       <td>{{ x.regionhead }}</td>
       <td>{{ x.sitehead }}</td>
-      <td><a href="#" class="btn btn-outline-success btn-sm">Update</a></td>
+      <td><a href="{% url 'PrjUpdate' x.pk %}" class="btn btn-outline-success btn-sm">Update</a></td>
       <td><a href="{% url 'ProjectDelete' x.pk %}" class="btn btn-outline-danger btn-sm">Delete</a></td>
     </tr>
   {% endfor %}
@@ -48,9 +48,9 @@
 
   </table>
 {% else %}
-  <div style="margin-left: 200px; margin-bottom: 50px; font-size: large;">
+  <div style="margin-left: 200px; margin-bottom: 0px; font-size: large;">
     <br>
-      No data available!  
+      No data available!  <br><br>
   </div>
   <!-- <div style="margin-left: 200px; margin-bottom: 50px;">
     <br>
@@ -59,10 +59,9 @@
   </div> -->
 {% endif %}
 {% endblock %}
-<div style="margin-left: 200px; margin-bottom: 50px;">
-  <br>
+<div style="margin-left: 200px; margin-bottom: 0px;">
   Want to add a project?
-  <a href="{% url 'ProjectForm' %}">Add Project</a>
+  <a href="{% url 'ProjectForm' %}" class="btn btn-outline-primary btn-sm">Add Project</a>
 </div>
 {% endblock %}
 {% endblock %}

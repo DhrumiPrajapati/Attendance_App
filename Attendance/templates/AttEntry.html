@@ -41,14 +41,13 @@
   <a href="{% url 'AttFormView' %}">Today's Attendance</a>.
 </div> -->
 {% else %}
-  <div style="margin-left: 50px; margin-bottom: 50px; font-size: large;">
+  <div style="margin-left: 50px; font-size: large;">
     <br>
       You haven't submitted the attendance yet!!
   </div>
-  <div style="margin-left: 50px; margin-bottom: 50px;">
+  <div style="margin-left: 50px;">
     <br>
-    Click here to add your 
-    <a href="{% url 'AttFormView' %}">Attendance Record</a>.
+    <a href="{% url 'AttFormView' %}"  class="btn btn-outline-primary btn-sm">Add Attendance Record</a>
   </div>
 {% endif %}
 {% endblock %}

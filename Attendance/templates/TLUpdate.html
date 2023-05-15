@@ -1,0 +1,38 @@
+{% extends "home.html" %}
+{% load static %}
+
+{% block content %}
+{% block manager %}
+{% block emp %}
+
+<div class="emp">
+    <h4 style="text-align: left; margin: 50px 0px 50px 50px;">
+        Update Attendance of <b>{{att.user.first_name}} {{att.user.last_name}}</b> 
+    </h4>
+
+    <div style="margin-left: 50px;">
+        <h5>
+            Attendance
+        </h5> 
+        <div class="box">
+            <hr>
+        </div>
+        <form action="{% url 'TLUpdate' att.pk %}" method="POST" class="post-form">
+            {% csrf_token %}
+            {% for field in attform1 %}
+                <div class="fieldWrapper">
+                    {{ field }}
+                    <input type="hidden" name="mapping" value="{{ att.mapping }}">
+                </div>
+            {% endfor %}
+
+            <div style="margin-top: 10px;">
+                <button type="submit" class="save btn btn-primary">Update</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+{% endblock %}
+{% endblock %}

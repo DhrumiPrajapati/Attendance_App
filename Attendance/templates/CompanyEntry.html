@@ -15,7 +15,6 @@
     General Details
   </h5>
 
-
   <table style="margin-left: 55;" class="table">
     <!-- <thead class="thead-dark">
       <tr>
@@ -55,7 +54,6 @@
       </tr>
       {% endfor %}
     </tbody>
-
     </table>
 
     <h5 style="margin: 50px 0px 20px 50px;">
@@ -64,7 +62,7 @@
 
     <table style="margin-left: 55;" class="table">
       <tbody  class="text-left">
-        {% for x in compdata %}  
+      {% for x in compdata %}  
         <tr>
           <td class="col-2 font-weight-bold">Leaves allowed per month</td>
           <td>{{ x.lapm }}</td>
@@ -76,8 +74,9 @@
         <tr>
           <td class="col-2 font-weight-bold">Official Weekend Leaves</td>
           <td>{{ x.offleave }}</td>
-        </tr>  
-      {% endfor %}
+        </tr>
+    {% endfor %}
+
       </tbody>
     </table>
   </div>
@@ -87,13 +86,20 @@
     No data available!  
 </div>
 <div style="margin-left: 50px; margin-bottom: 50px;">
-  <br>
-  Click here to add  
-  <a href="{% url 'CompanyDetail' %}">Company's Details</a>.
+  <br> 
+  <a href="{% url 'CompanyDetail' %}" class="btn btn-outline-primary btn-sm">Add Company Details</a>
 </div>
 
 {% endif %}
+
 {% endblock %}
 {% endblock %}
+
+{% for x in compdata %}
+<div style="margin-left: 200px;">
+  <a href="{% url 'CompUpdate' x.pk %}" class="btn btn-outline-success btn-sm" style="margin-right: 15px;">Update</a>
+    <a href="{% url 'CompDelete' x.pk %}" class="btn btn-outline-danger btn-sm">Delete</a>
+</div>
+{% endfor %}
 
 {% endblock %}

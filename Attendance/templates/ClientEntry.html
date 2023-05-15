@@ -46,7 +46,7 @@
       <td>{{ x.cpcm }}</td>
       <td>{{ x.cemail }}, {{ x.cphone }}</td>
       <td>{{ x.caddress }}</td>
-      <td><a href="#" class="btn btn-outline-success btn-sm">Update</a></td>
+      <td><a href="{% url 'CliUpdate' x.pk %}" class="btn btn-outline-success btn-sm">Update</a></td>
       <td><a href="{% url 'ClientDelete' x.pk %}" class="btn btn-outline-danger btn-sm">Delete</a></td>
     </tr>
   {% endfor %}
@@ -54,16 +54,18 @@
 
   </table>
   {% else %}
-  <div style="margin-left: 200px; margin-bottom: 50px; font-size: large;">
+  <div style="margin-left: 200px; margin-bottom: 0px; font-size: 18px;">
     <br>
-      No data available!  
+      No data available!
+      <br><br>
   </div>
+
 {% endif %}
+
 {% endblock %}
 <div style="margin-left: 200px; margin-bottom: 50px;">
-  <br>
   Want to add a Client?
-  <a href="{% url 'ClientForm' %}">Add Client</a>
+  <a href="{% url 'ClientForm' %}" class="btn btn-outline-primary btn-sm">Add Client</a>    
 </div>
 {% endblock %}
 {% endblock %}

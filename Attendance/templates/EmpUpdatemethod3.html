@@ -1,0 +1,62 @@
+{% extends "home.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="emp">
+    <h4 style="text-align: left; margin: 50px 0px 50px 50px;">
+        Update Employee Entry of <b>{{emp.empid}} - {{emp.firstname}} {{emp.lastname}}</b>
+    </h4>
+
+    <div style="margin-left: 50px;">
+        <h5>
+            Personal Details
+        </h5>
+        <div class="box">
+            <hr>
+        </div>
+
+        <form action="{% url 'EmpUpdate' emp.pk %}" method="POST" class="post-form" >
+            {% csrf_token %}
+            {{ empform1.phone.label_tag }}
+            {{ empform1.phone }}
+            <br><br>
+            {{ empform1.address.label_tag }}
+            {{ empform1.address }}
+            <br><br>
+            {{ empform1.bloodgroup.label_tag }}
+            {{ empform1.bloodgroup }}
+            <br><br>
+            {{ empform1.econtactname.label_tag }}
+            {{ empform1.econtactname }}
+            <br><br>
+            {{ empform1.econtactphone.label_tag }}
+            {{ empform1.econtactphone }}
+            <br><br>
+            <h5>
+                Job Details
+            </h5>
+            <div class="box">
+                <hr>
+            </div>
+            {{ empform2.department.label_tag }}
+            {{ empform2.department }}
+            <br><br>
+            {{ empform2.designation.label_tag }}
+            {{ empform2.designation }}
+            <br><br>
+            {{ empform2.emptype.label_tag }}
+            {{ empform2.emptype }}
+            <br><br>
+            {{ empform2.salary.label_tag }}
+            {{ empform2.salary }}
+            <br><br>
+            {{ empform2.per.label_tag }}
+            {{ empform2.per }}
+            <br><br>
+            <button type="submit" class="save btn btn-primary">Update</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

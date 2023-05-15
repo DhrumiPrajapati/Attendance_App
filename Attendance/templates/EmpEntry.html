@@ -20,6 +20,7 @@
       <th scope="col">Bloodgroup</th>
       <th scope="col">Emergency Contact Details</th>
       <th scope="col">Date of Joining</th>
+      <th scope="col">Role</th>
       <th scope="col">Department - Designation</th>
       <th scope="col">Employment Type</th>
       <th scope="col">Salary</th>
@@ -37,10 +38,11 @@
       <td>{{ x.bloodgroup }}</td>
       <td>{{ x.econtactname }} - {{ x.econtactphone }}</td>
       <td>{{ x.doj }}</td>
+      <td>{{ x.role }}</td>
       <td>{{ x.department }} - {{ x.designation }}</td>
       <td>{{ x.emptype }}</td>
       <td>{{ x.salary }}/- per {{ x.per }}</td>
-      <td><a href="#" class="btn btn-outline-success btn-sm">Update</a></td>
+      <td><a href="{% url 'EmpUpdate' x.pk %}" class="btn btn-outline-success btn-sm">Update</a></td>
       <td><a href="{% url 'EmpDelete' x.pk %}" class="btn btn-outline-danger btn-sm">Delete</a></td>
     </tr>
     {% endfor %}
@@ -49,14 +51,14 @@
   </table>
 
 {% else %}
-<div style="margin-left: 200px; margin-bottom: 50px; font-size: large;">
+<div style="margin-left: 200px; margin-bottom: 50px; font-size: 18px;">
   <br>
-    No data available!  
+    No data available!  <br><br>
 </div>
 {% endif %}
 <div style="margin-left: 200px; margin-bottom: 50px;">
   <br>
-  Want to add an employee?
-  <a href="{% url 'EmpForm' %}">Add Employee</a>
+  Want to add an employee? 
+  <a href="{% url 'EmpForm' %}"  class="btn btn-outline-primary btn-sm">Add Employee</a>
 </div>
 {% endblock %}

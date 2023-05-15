@@ -4,10 +4,12 @@
 <!doctype html lang="en">
   <head>
     <title>Attendance App</title>
+    <link rel="icon" type="image/gif/png" href="images/user.png">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   </head>
 
   <body>
@@ -101,7 +103,7 @@
       <nav class="navbar navbar-expand-lg nav1">
         <div class="container-fluid" style="width: fit-content;">
           <a class="navbar-brand" href="{% url 'userdata' %}">
-            <img src="{% static 'images/user1.png' %}" width="40" height="40" class="d-inline-block align-top" alt="" style="margin-left: 28px;">
+            <img src="{% static 'images/user.png' %}" width="40" height="40" class="d-inline-block align-top" style="margin-left: 28px;">
           </a>
         </div>
 
@@ -125,7 +127,8 @@
                 </b>
               </li>
             </ul>
-            <ul class="navbar-nav mb-2 mb-lg-0 d-flex" style="position: absolute; right: 0;">
+
+            <ul class="navbar-nav mb-2 mb-lg-0 d-flex" style="position: absolute; right: 55;">
               <li>
                 <b>
                   <a class="nav-link"  href="{% url 'userdata' %}" style="margin-top: 25px; font-size: 17px; margin-right: 80px;">
@@ -139,6 +142,15 @@
               <!-- <li>
                 <a href="" class="nav-link" style="margin-top: 17px;">Logout</a>
               </li> -->
+
+            <ul class="navbar-nav mb-2 mb-lg-0 d-flex" style="position: absolute; right: 60;">
+              <li class="nav-item">
+                <a class="ml-auto navbar-brand exit" href="{% url 'logoutview' %}">
+                  <img src="{% static 'images/app3.png' %}" alt="Bootstrap" width="33" height="33" style="margin-top: 0px; margin-right: 5px;">
+                </a>
+              </li>
+            </ul>
+
             <ul class="navbar-nav mb-2 mb-lg-0 d-flex" style="position: absolute; right: 0;">
               <li class="nav-item">
                 <a class="ml-auto navbar-brand exit" href="{% url 'logoutview' %}">
@@ -146,6 +158,7 @@
                 </a>
               </li>
             </ul>
+
           </div>
         </div>
       </nav>
@@ -212,8 +225,8 @@
                   <li class="nav-item list" style="margin-bottom: 10px;">
                     <a class="nav-link" href="#">Approvals of Submissions</a>
                     <div class="side-modal">
-                      <a class="nav-link sm1" href="{% url 'tasklist' %}">Records List</a>
-                      <!-- <a class="nav-link sm1" href="#">Completed Tasks</a> -->
+                      <a class="nav-link sm1" href="{% url 'tasklist' %}">Pending Tasks</a>
+                      <a class="nav-link sm1" href="#">Approved Tasks</a>
                     </div>
                   </li>
                 </ul>

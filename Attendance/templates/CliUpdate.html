@@ -1,0 +1,38 @@
+{% extends "home.html" %}
+{% load static %}
+
+{% block content %}
+{% block manager %}
+
+<div class="emp">
+    <h4 style="text-align: left; margin: 50px 0px 50px 50px;">
+        Update Client Entry of <b>{{cli.cid}} - {{cli.cfirstname}} {{cli.clastname}}</b> 
+    </h4>
+
+    <div style="margin-left: 50px;">
+        <h5>
+            General Details
+        </h5> 
+        <div class="box">
+            <hr>
+        </div>
+
+        <form action="{% url 'CliUpdate' cli.pk %}" method="POST" class="post-form" >
+            {% csrf_token %}
+            {{ clientform1.as_p}}
+
+            <h5>
+                Contact Details
+            </h5> 
+            <div class="box">
+                <hr>
+            </div>
+
+            {{ clientform2.as_p}}
+            <button type="submit" class="save btn btn-primary">Update</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
+{% endblock %}

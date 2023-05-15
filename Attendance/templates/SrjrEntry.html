@@ -22,28 +22,33 @@
       </tr>
       {% for x in mapdata %}  
       <tr>
-        <td>{{ x.junior }}</td>
+        <td>{{ x.junior }}
+        <a href="{% url 'MapDelete' x.pk %}" class="btn btn-outline-danger btn-sm" style="margin-left: 100px; margin-right: 100px;">Delete</a>
+      </td>
       </tr>
       {% endfor %}
+
+      <tr>
+        <td>
+          <a href="{% url 'AttFormView' %}" class="btn btn-outline-primary btn-sm">Add Attendance</a>
+        </td>
+      </tr>
     </tbody>
   </table>
-</div>
-<div style="margin-left: 210px; margin-bottom: 50px;">
-  <br>
-  Click here to add  
-  <a href="{% url 'AttFormView' %}">Today's Attendance</a>.
-</div>
-{% else %}
-<div style="margin-left: 50px; margin-bottom: 50px; font-size: large;">
-  <br>
-    Oops! You haven't selected your juniors yet!!
-</div>
+
 <div style="margin-left: 50px; margin-bottom: 50px;">
   <br>
-  Click here to select your 
-  <a href="{% url 'SrjrMapFormView' %}">Juniors</a>.
+</div>
+{% else %}
+<div style="margin-left: 50px; margin-bottom: 0px; font-size: large;">
+  <br>
+    Oops! You haven't selected your juniors yet!! <br><br>
+</div>
+<div style="margin-left: 50px; margin-bottom: 50px;">
+  <a href="{% url 'SrjrMapFormView' %}" class="btn btn-outline-primary btn-sm">Select Juniors</a>
 </div>
 {% endif %}
+
 {% endblock %}
 {% endblock %}
 {% endblock %}

@@ -1,0 +1,80 @@
+{% extends "home.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="emp">
+    <h4 style="text-align: left; margin: 50px 0px 50px 50px;">
+        Employee Entry Form
+    </h4>
+
+    <div style="margin-left: 50px;">
+        <h5>
+            Personal Details
+        </h5> 
+        <div class="box">
+            <hr>
+        </div>
+
+        <form action="{% url 'EmpUpdate' emp.pk %}" method="POST" class="post-form" >
+            {% csrf_token %}
+            <label for="firstname">First Name:</label>
+            <input type="text" id="firstname" name="firstname" value="{{ emp.firstname }}" required><br>
+        
+            <label for="lastname">Last Name:</label>
+            <input type="text" id="lastname" name="lastname" value="{{ emp.lastname }}" required><br>
+        
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" value="{{ emp.email }}" required><br>
+        
+            <label for="phone">Phone:</label>
+            <input type="text" id="phone" name="phone" value="{{ emp.phone }}" required><br>
+
+            <label for="address">Address:</label>
+            <input type="text" id="address" name="address" value="{{ emp.address }}" required><br>
+
+            <label for="bloodgroup">Bloodgroup:</label>
+            <input type="text" id="bloodgroup" name="bloodgroup" value="{{ emp.bloodgroup }}" required><br>
+
+            <label for="econtactname">Emergency Contact Name:</label>
+            <input type="text" id="econtactname" name="econtactname" value="{{ emp.econtactname }}" required><br>
+
+            <label for="econtactphone">Emergency Contact Number:</label>
+            <input type="text" id="econtactphone" name="econtactphone" value="{{ emp.econtactphone }}" required><br>
+
+            <h5>
+                Job Details
+            </h5> 
+            <div class="box">
+                <hr>
+            </div>
+            <label for="empid">Employee ID:</label>
+            <input type="text" id="empid" name="empid" value="{{ emp.empid }}" required><br>
+        
+            <label for="role">Role:</label>
+            <input type="text" id="role" name="role" value="{{ emp.role }}" required><br>
+        
+            <label for="doj">Date of Joining:</label>
+            <input type="text" id="doj" name="doj" value="{{ emp.doj }}" required><br>
+        
+            <label for="department">Department:</label>
+            <input type="text" id="department" name="department" value="{{ emp.department }}" required><br>
+
+            <label for="designation">Designation:</label>
+            <input type="text" id="designation" name="designation" value="{{ emp.designation }}" required><br>
+
+            <label for="emptype">Employment Type:</label>
+            <input type="text" id="emptype" name="emptype" value="{{ emp.emptype }}" required><br>
+
+            <label for="Salary">Salary:</label>
+            <input type="text" id="salary" name="salary" value="{{ emp.salary }}" required><br>
+
+            <label for="per">Per:</label>
+            <input type="text" id="per" name="per" value="{{ emp.per }}" required><br>
+
+            <button type="submit" class="save btn btn-primary">Update</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

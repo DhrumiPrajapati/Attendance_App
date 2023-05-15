@@ -1,0 +1,26 @@
+{% extends "home.html" %}
+{% load static %}
+
+{% block content %}
+{% block emp %}
+{% block manager %}
+
+<div class="emp">
+    <h4 style="text-align: left; margin: 50px 0px 50px 50px;">
+        Senior-Junior Mapping Form
+    </h4>
+
+    <div style="margin-left: 50px;">
+        <form action="{% url 'MapUpdate' mapping.pk %}" method="POST" class="post-form">
+            {% csrf_token %}
+            {{ form.as_p}}
+            <button type="submit" class="save btn btn-primary">Update</button>
+        </form>
+    </div>
+</div>
+
+{% endif %}
+
+{% endblock %}
+{% endblock %}
+{% endblock %}

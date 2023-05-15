@@ -1,0 +1,36 @@
+{% extends "home.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="emp">
+    <h4 style="text-align: left; margin: 50px 0px 50px 50px;">
+        Update Company Details
+    </h4>
+
+    <div style="margin-left: 50px;">
+        <h5>
+            General Details
+        </h5> 
+        <div class="box">
+            <hr>
+        </div>
+
+        <form action="{% url 'CompUpdate' comp.pk %}" method="POST" class="post-form">
+            {% csrf_token %}
+            {{ compform1.as_p}}
+
+            <h5>
+                Additional Details
+            </h5> 
+            <div class="box">
+                <hr>
+            </div>
+
+            {{ compform2.as_p}}
+            <button type="submit" class="save btn btn-primary">Update</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

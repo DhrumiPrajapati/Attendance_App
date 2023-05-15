@@ -120,7 +120,7 @@ class SrjrMapForm(forms.ModelForm):
     junior = forms.ModelMultipleChoiceField(
         queryset=Mapping.objects.all(),
         widget=forms.CheckboxSelectMultiple(),
-        label='Select Junior(s)'
+        label='Select Junior(s)',
     )
 
     def __init__(self, user, *args, **kwargs):
@@ -206,7 +206,9 @@ class AttForm1(forms.ModelForm):
     class Meta:
         model = Attendance
         fields = ['attendance']
-        exclude = ['tdate']
+        widgets = {
+            'tdate': forms.HiddenInput(),
+        }
 
 class AttForm2(forms.ModelForm):
     ATTENDANCE = (('Full Day','Full Day'),
@@ -221,7 +223,10 @@ class AttForm2(forms.ModelForm):
     class Meta:
         model = Attendance
         fields = ['mapping','attendance']
-        exclude = ['tdate']
+        widgets = {
+            'tdate': forms.HiddenInput(),
+        }
+        # exclude = ['tdate']
         
     def __init__(self, *args, **kwargs):
         junior = kwargs.pop('junior', None)
@@ -229,7 +234,8 @@ class AttForm2(forms.ModelForm):
         if junior:
             junior_attendance = Attendance.objects.filter(user=junior.user, tdate=self.instance.tdate, mapping=junior).first()
             if junior_attendance:
-                self.fields['status'].initial = junior_attendance.status
+                # self.fields['status'].initial = junior_attendance.status
+                self.fields['attendance'].initial = junior_attendance.attendance
 
     # mapping = forms.ModelMultipleChoiceField(
     #     queryset=JrAttendance.objects.all(),

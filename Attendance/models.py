@@ -7,6 +7,9 @@ from django.contrib.auth.models import User
 from django.contrib.auth.models import AbstractUser
 from django.db.models.signals import pre_delete, post_save
 from django.dispatch import receiver
+from django.contrib.auth.models import User
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
 
 # Create your models here.
 #Model for additional fields of SignUp form
@@ -19,6 +22,10 @@ from django.dispatch import receiver
 #         eid = models.CharField(verbose_name='Employee ID', max_length=20, null=True)
 #         # is_staff = models.BooleanField(default=False)
 #         # is_superuser = models.BooleanField(default=False)
+
+# class User(AbstractUser):
+#         def __str__(self):
+#                 return f"{self.get_full_name()} (ID: {self.id})"
 
 #Model for the EmpForm
 class Employee(models.Model):
@@ -99,6 +106,21 @@ class Employee(models.Model):
                         return self.firstname + " " + self.lastname
                 else:
                         return ""
+                
+# @receiver(post_delete, sender=Employee)
+# def delete_user_on_employee_delete(sender, instance, **kwargs):
+#         try:
+#                 user = User.objects.get(pk=instance.user_id)
+#                 user.delete()
+#         except User.DoesNotExist:
+#                 pass
+                
+        # def delete(self, *args, **kwargs):
+        #         # Delete the associated User object
+        #         self.user.delete()
+
+        #         # Call the parent delete() method to delete the Employee object
+        #         super().delete(*args, **kwargs)
                 
 # @receiver(pre_delete, sender=Employee)
 # def delete_user(sender, instance, **kwargs):

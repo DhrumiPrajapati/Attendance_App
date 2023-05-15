@@ -68,17 +68,6 @@ def home(request):
 #     }
 #     return HttpResponse(template.render(context, request))
 
-#tasklist
-@login_required(login_url='loginview')
-@never_cache
-def tasklist(request):
-    logged_in_user = request.user
-    junior_ids = Mapping.objects.filter(user=logged_in_user).values_list('junior', flat=True)
-    att_data = Attendance.objects.filter(user__id__in=junior_ids, mapping=None)
-    template = loader.get_template('TaskList.html')
-    context = {'att_data': att_data, 'username': request.user.username, 'junior_ids':junior_ids}
-    return HttpResponse(template.render(context, request))
-
 #user_data view
 @login_required(login_url='loginview')
 @never_cache
@@ -109,15 +98,10 @@ def userdata(request):
 #     context = {'username': request.user.username, 'employee': employee, 'user':user}
 #     return HttpResponse(template.render(context, request))
 
-
-
-
 # class EmpDelete(DeleteView):
 #     model = Employee
 #     success_url = reverse_lazy('EmpList')
 #     template_name = 'Attendance/templates/delete_confirm.html'
-
-
 
 #emp_home template view
 @login_required(login_url='loginview')
@@ -134,7 +118,7 @@ def loginview(request):
             uname = fm.cleaned_data['username']
             upass = fm.cleaned_data['password']
             user = authenticate(username=uname, password=upass)
-            print(request.user.is_authenticated)
+            # print(request.user.is_authenticated)
             if user is not None:
                 if user.is_active:
                     login(request, user)
@@ -246,17 +230,79 @@ def EmpEntry(request):
 
     return HttpResponse(template.render(context, request))
 
-#for delete emp record
-def EmpList(request, template_name='EmpEntry.html'):
-    emp = Employee.objects.all()
-    data = {}
-    data['EmpList'] = emp
-    return render(request, template_name, data)
+# @login_required(login_url='loginview')
+# @never_cache
+# def EmpUpdateForm(request, pk):
+#     emp = Employee.objects.get(pk=pk)
+#     context = {'emp': emp}
+#     return render(request, 'EmpUpdate.html', context)
 
+# def EmpUpdate(request, pk):
+#     emp = Employee.objects.get(pk=pk)
+
+#     if request.method == 'POST':
+#         emp.firstname = request.POST.get('firstname')
+#         emp.lastname = request.POST.get('lastname')
+#         emp.email = request.POST.get('email')
+#         emp.phone = request.POST.get('phone')
+#         emp.address = request.POST.get('address')
+#         emp.bloodgroup = request.POST.get('bloodgroup')
+#         emp.econtactname = request.POST.get('econtactname')
+#         emp.econtactphone = request.POST.get('econtactphone')
+#         emp.empid = request.POST.get('empid')
+#         emp.role = request.POST.get('role')
+#         emp.doj = request.POST.get('doj')
+#         emp.department = request.POST.get('department')
+#         emp.designation = request.POST.get('designation')
+#         emp.emptype = request.POST.get('emptype')
+#         emp.salary = request.POST.get('salary')
+#         emp.per = request.POST.get('per')
+#         emp.save()
+#         return redirect('EmpEntry')
+
+#     context = {'emp': emp}
+#     return render(request, 'EmpUpdate.html', context)
+
+@login_required(login_url='loginview')
+@never_cache
+def EmpUpdate(request, pk):
+    employee = get_object_or_404(Employee, pk=pk)
+
+    if request.method == 'POST':
+        empform1 = EmpForm1(request.POST, instance=employee)
+        empform2 = EmpForm2(request.POST, instance=employee)
+        
+        if empform1.is_valid() and empform2.is_valid():
+            # empform1.instance.firstname = employee.firstname
+            # empform1.instance.lastname = employee.lastname
+            # empform1.instance.email = employee.email
+
+            # empform2.instance.empid = employee.empid
+            # empform2.instance.role = employee.role
+            # empform2.instance.doj = employee.doj
+
+            empform1.save()
+            empform2.save()
+            return redirect('EmpEntry')
+        print(empform1.errors)
+        print(empform2.errors)
+
+    else:
+        empform1 = EmpForm1(instance=employee)
+        empform2 = EmpForm2(instance=employee)
+
+    return render(request, 'EmpUpdate.html', {'empform1': empform1, 'empform2': empform2, 'emp':employee})
+
+# @user_passes_test(lambda u: not u.is_superuser)
+@login_required(login_url='loginview')
+@never_cache
 def EmpDelete(request, pk, template_name='delete_confirm_emp.html'):
     emp= get_object_or_404(Employee, pk=pk)    
     if request.method=='POST':
+        # user = emp.user
         emp.delete()
+        # user.delete()
+
         return redirect('EmpEntry')
     return render(request, template_name, {'object':emp})
 
@@ -293,16 +339,32 @@ def ClientEntry(request):
     context = {
         'clientdata': data,
     }
-    print(data)
+    # print(data)
 
     return HttpResponse(template.render(context, request))
 
-def ClientList(request, template_name='ClientEntry.html'):
-    cli = Client.objects.all()
-    data = {}
-    data['ClientList'] = cli
-    return render(request, template_name, data)
+@login_required(login_url='loginview')
+@never_cache
+def CliUpdate(request, pk):
+    client = get_object_or_404(Client, pk=pk)
 
+    if request.method == 'POST':
+        clientform1 = ClientForm1(request.POST, instance=client)
+        clientform2 = ClientForm2(request.POST, instance=client)
+        
+        if clientform1.is_valid() and clientform2.is_valid():
+            clientform1.save()
+            clientform2.save()
+            return redirect('ClientEntry')
+
+    else:
+        clientform1 = ClientForm1(instance=client)
+        clientform2 = ClientForm2(instance=client)
+
+    return render(request, 'CliUpdate.html', {'clientform1': clientform1, 'clientform2': clientform2, 'cli':client})
+
+@login_required(login_url='loginview')
+@never_cache
 def ClientDelete(request, pk, template_name='delete_confirm_client.html'):
     cli= get_object_or_404(Client, pk=pk)    
     if request.method=='POST':
@@ -314,6 +376,7 @@ def ClientDelete(request, pk, template_name='delete_confirm_client.html'):
 @login_required(login_url='loginview')
 @never_cache
 def ProjectForm(request):
+    client=Client.objects.all()
     project = Project()  # create an object for the shared model
     if request.method == 'POST':
         prjform1 = PrjForm1(request.POST, instance=project)  # pass the object to both forms
@@ -328,7 +391,7 @@ def ProjectForm(request):
     else:
         prjform1 = PrjForm1(instance=project)  # pass the object to both forms
         prjform2 = PrjForm2(instance=project)
-    return render(request, "ProjectForm.html", {'prjform1': prjform1, 'prjform2': prjform2})
+    return render(request, "ProjectForm.html", {'prjform1': prjform1, 'prjform2': prjform2, 'client':client})
 
 # Project Entries View
 @login_required(login_url='loginview')
@@ -341,42 +404,36 @@ def ProjectEntry(request):
     context = {
         'prjdata': data,
     }
-
     return HttpResponse(template.render(context, request))
 
-def ProjectList(request, template_name='ProjectEntry.html'):
-    prj = Project.objects.all()
-    data = {}
-    data['ProjectList'] = prj
-    return render(request, template_name, data)
+@login_required(login_url='loginview')
+@never_cache
+def PrjUpdate(request, pk):
+    project = get_object_or_404(Project, pk=pk)
 
+    if request.method == 'POST':
+        prjform1 = PrjForm1(request.POST, instance=project)
+        prjform2 = PrjForm2(request.POST, instance=project)
+        
+        if prjform1.is_valid() and prjform2.is_valid():
+            prjform1.save()
+            prjform2.save()
+            return redirect('ProjectEntry')
+
+    else:
+        prjform1 = PrjForm1(instance=project)
+        prjform2 = PrjForm2(instance=project)
+
+    return render(request, 'PrjUpdate.html', {'prjform1': prjform1, 'prjform2': prjform2, 'prj':project})
+
+@login_required(login_url='loginview')
+@never_cache
 def ProjectDelete(request, pk, template_name='delete_confirm_prj.html'):
     prj= get_object_or_404(Project, pk=pk)    
     if request.method=='POST':
         prj.delete()
         return redirect('ProjectEntry')
     return render(request, template_name, {'object':prj})
-
-# @login_required(login_url='loginview')
-# @never_cache
-# def SrjrMapFormView(request):
-#     form = SrjrMapForm(user=request.user)
-#     empdata = Employee.objects.all()
-#     map_data = Mapping.objects.filter(user=request.user)
-#     if request.method == 'POST':
-#         form = SrjrMapForm(request.user, request.POST)
-#         if form.is_valid():
-#             juniors = form.cleaned_data['junior']
-#             mappings = []
-#             for junior in juniors:
-#                 mapping = Mapping(user=request.user, jid=junior.id, junior=str(junior))
-#                 mappings.append(mapping)
-#             Mapping.objects.bulk_create(mappings)
-#             return redirect('SrjrEntry')
-#     else:
-#         form = SrjrMapForm(user=request.user)
-#     return render(request, "SrjrMapForm.html", {'form': form, 'map_data': map_data, 'empdata':empdata,})
-
 
 # Senior-Junior Mapping Form View
 @login_required(login_url='loginview')
@@ -410,6 +467,31 @@ def SrjrEntry(request):
     }
 
     return HttpResponse(template.render(context, request))
+
+# @login_required(login_url='loginview')
+# @never_cache
+# def MapUpdate(request, pk):
+#     mapping = get_object_or_404(Mapping, pk=pk)
+
+#     if request.method == 'POST':
+#         mapform = SrjrMapForm(request.POST, instance=mapping)
+        
+#         if mapform.is_valid():
+#             mapform.save()
+#             return redirect('SrjrEntry')
+#     else:
+#         mapform = SrjrMapForm(request.POST, instance=mapping)
+
+#     return render(request, 'MapUpdate.html', {'mapform': mapform, 'mapping':mapping})
+
+@login_required(login_url='loginview')
+@never_cache
+def MapDelete(request, pk, template_name='delete_confirm_map.html'):
+    map = get_object_or_404(Mapping, pk=pk)    
+    if request.method=='POST':
+        map.delete()
+        return redirect('SrjrEntry')
+    return render(request, template_name, {'object':map})
 
 #Attendance Form View
 @login_required(login_url='loginview')
@@ -462,6 +544,88 @@ def AttEntry(request):
 
     return HttpResponse(template.render(context, request))
 
+#List of task for Attendance Approval
+# @login_required(login_url='loginview')
+# @never_cache
+# def tasklist(request):
+#     logged_in_user = request.user
+#     junior_ids = Mapping.objects.filter(user=logged_in_user).values_list('junior', flat=True)
+#     att_data = Attendance.objects.filter(user__id__in=junior_ids, mapping=None)
+#     template = loader.get_template('TaskList.html')
+#     context = {'att_data': att_data, 'username': request.user.username, 'junior_ids':junior_ids}
+#     return HttpResponse(template.render(context, request))
+
+@login_required(login_url='loginview')
+@never_cache
+def tasklist(request):
+    logged_in_user = request.user
+    junior_ids = Mapping.objects.filter(user=logged_in_user).values_list('junior', flat=True)
+    att_data = Attendance.objects.filter(user__id__in=junior_ids, mapping=None)
+    template = loader.get_template('TaskList.html')
+    context = {'att_data': att_data, 'username': request.user.username, 'junior_ids': junior_ids}
+    return HttpResponse(template.render(context, request))
+
+@login_required(login_url='loginview')
+@never_cache
+def TLUpdate(request, pk):
+    att = get_object_or_404(Attendance, pk=pk)
+
+    if request.method == 'POST':
+        attform1 = AttForm1(request.POST, instance=att)
+
+        if attform1.is_valid():
+            attform1.instance.user = att.user
+            attform1.instance.tdate = att.tdate
+            attform1.save()
+            return redirect('tasklist')
+        
+        print(attform1.errors)
+
+    else:
+        attform1 = AttForm1(instance=att)
+
+    return render(request, 'TLUpdate.html', {'attform1': attform1, 'att': att})
+
+
+# @login_required(login_url='loginview')
+# @never_cache
+# def TLUpdate(request, pk):
+#     # junior_ids = request.GET.getlist('junior_ids')  # Retrieve the junior_ids from the request
+    
+#     # junior_ids = Mapping.objects.filter(user=request.user).values_list('junior', flat=True)
+
+#     att = get_object_or_404(Attendance, pk=pk)
+
+#     if request.method == 'POST':
+#         attform1 = AttForm1(request.POST, instance=att)
+#         attform2 = AttForm2(request.POST, instance=att)
+        
+#         if attform1.is_valid() and attform2.is_valid():
+#             attform1.instance.user = att.user
+#             attform1.instance.tdate = att.tdate
+
+#             # attform2.instance.mapping = att.mapping
+            
+#             attform2.instance.mapping = att.mapping
+#             print(attform2.instance.mapping)
+
+#             attform1.save()
+#             attform2.save()
+#             return redirect('tasklist')
+        
+#         print(attform1.errors)
+#         print(attform2.errors)
+
+#     else:
+#         attform1 = AttForm1(instance=att)
+#         attform2 = AttForm2(instance=att)
+
+
+#     # return render(request, 'TLUpdate.html', {'attform1': attform1, 'attform2': attform2, 'junior_ids': junior_ids, 'att': att})
+#     return render(request, 'TLUpdate.html', {'attform1': attform1, 'attform2': attform2, 'att': att, 'mapping':att.mapping})
+
+
+
 #Company Form View
 @login_required(login_url='loginview')
 @never_cache
@@ -494,6 +658,35 @@ def CompanyEntry(request):
     }
 
     return HttpResponse(template.render(context, request))
+
+@login_required(login_url='loginview')
+@never_cache
+def CompUpdate(request, pk):
+    comp = get_object_or_404(Company, pk=pk)
+
+    if request.method == 'POST':
+        compform1 = CompForm1(request.POST, instance=comp)
+        compform2 = CompForm2(request.POST, instance=comp)
+        
+        if compform1.is_valid() and compform2.is_valid():
+            compform1.save()
+            compform2.save()
+            return redirect('CompanyEntry')
+
+    else:
+        compform1 = CompForm1(instance=comp)
+        compform2 = CompForm2(instance=comp)
+
+    return render(request, 'CompanyUpdate.html', {'compform1': compform1, 'compform2': compform2, 'comp':comp})
+
+@login_required(login_url='loginview')
+@never_cache
+def CompDelete(request, pk, template_name='delete_confirm_comp.html'):
+    comp= get_object_or_404(Company, pk=pk)    
+    if request.method=='POST':
+        comp.delete()
+        return redirect('CompanyEntry')
+    return render(request, template_name, {'object':comp})
 
 # def signin(request):
 #     if request.method == 'POST':

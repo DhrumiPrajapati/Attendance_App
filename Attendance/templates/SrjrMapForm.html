@@ -6,11 +6,12 @@
 {% block emp %}
 {% block manager %}
 
-{% if empdata %}
 <div class="emp">
     <h4 style="text-align: left; margin: 50px 0px 50px 50px;">
         Senior-Junior Mapping Form
     </h4>
+{% if empdata %}
+
 
     <div style="margin-left: 50px;">
         <form action="{% url 'SrjrMapFormView' %}" method="POST" class="post-form" >
@@ -25,15 +26,12 @@
     </div>
 </div>
 {% else %}
-<div style="margin-left: 250px; margin-top: 100px; margin-bottom: 50px; font-size: large;">
+<div style="margin-left: 50px; margin-top: 0px; font-size: 18px;">
     <br>
-      You don't have any employees to select as juniors!!
+      You don't have any employees to select as juniors!! <br><br>
+      <a href="{% url 'EmpForm' %}" class="btn btn-outline-primary btn-sm">Add Employee</a>
 </div>
-<div style="margin-left: 250px; margin-bottom: 50px;">
-    <br>
-    Click here to add  
-    <a href="{% url 'EmpForm' %}">employees</a>.
-</div>
+
 {% endif %}
 {% endblock %}
 {% endblock %}
