@@ -7,7 +7,7 @@
 
 <div class="emp">
     <h4 style="text-align: left; margin: 50px 0px 50px 50px;">
-        Attendance Entry Form
+        <b>Attendance Entry Form</b>
     </h4>
 
     <div style="margin-left: 50px;">
@@ -17,6 +17,15 @@
         <div class="box">
             <hr>
         </div>
+
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}  
+
         <form action="{% url 'AttFormView' %}" method="POST" class="post-form">
             {% csrf_token %}
             <div class="row">
@@ -66,12 +75,7 @@
                 <button type="submit" class="save btn btn-primary">Send Approval</button>
             </div>
 
-            <div style="margin-left: 0px; margin-top: 25px;">
-            <br>
-                You haven't selected your juniors!!
-                <a href="{% url 'SrjrMapFormView' %}"  class="btn btn-outline-primary btn-sm">Add Juniors</a>
 
-            </div>
             <div style="margin-left: 0px; margin-bottom: 50px;">
             <br>
             </div>   

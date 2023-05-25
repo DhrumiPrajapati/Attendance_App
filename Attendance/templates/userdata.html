@@ -2,15 +2,11 @@
 {% load static %}
 
 {% block content %}
-{% block manager %}
-{% block emp %}
-
 <div class="emp">
     <h4 style="text-align: left; margin: 50px 0px 50px 50px;">
-        <img src="{% static 'images/user1.png' %}" width="100px" height="100px" style="margin-right: 15px;">
+        <img src="{% static 'images/user1.png' %}" width="60px" height="60px" style="margin-right: 15px;">
         Hello, {{user.first_name}} {{user.last_name}}! Welcome to your profile.
     </h4>
-    {% if request.user.is_superuser %}
     <table style="margin-left: 55;" class="table">
         <tbody  class="text-left">
             <tr>
@@ -31,7 +27,17 @@
             </tr>
         </tbody>
     </table>
-    {% else %}
+</div>
+{% endblock %}
+
+{% block manager %}
+{% block emp %}
+<div class="emp">
+    <h4 style="text-align: left; margin: 50px 0px 50px 50px;">
+        <img src="{% static 'images/user1.png' %}" width="60px" height="60px" style="margin-right: 15px;">
+        Hello, {{user.first_name}} {{user.last_name}}! Welcome to your profile.
+    </h4>
+
     <table style="margin-left: 55;" class="table">
         <tbody  class="text-left">
             <tr>
@@ -41,6 +47,10 @@
             <tr>
                 <td class="col-2 font-weight-bold">Name:</td>
                 <td>{{ employee.firstname }} {{ employee.lastname }}</td>
+            </tr>
+            <tr>
+                <td class="col-2 font-weight-bold">Role:</td>
+                <td>{{ employee.role }}</td>
             </tr>
             <tr>
                 <td class="col-2 font-weight-bold">Email:</td>
@@ -86,8 +96,8 @@
                 <td class="col-2 font-weight-bold">Salary:</td>
                 <td>{{ employee.salary }}/- per {{ employee.per }}</td>
             </tr>
-    {% endif %}
+        </tbody>
+    </table>
 </div>   
-{% endblock %}
 {% endblock %}
 {% endblock %}

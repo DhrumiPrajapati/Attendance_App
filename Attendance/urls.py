@@ -11,6 +11,10 @@ urlpatterns = [
     path('tlupdate/<int:pk>/', views.TLUpdate, name='TLUpdate'),
     path('tasklist/',views.tasklist,name='tasklist'),
     path('userdata',views.userdata,name='userdata'),
+    path('summary',views.summary,name='summary'),
+    path('summary_detail',views.summary_detail,name='summary_detail'),
+    path('approve/<int:pk>/',views.approve_task,name='approve_task'),
+    path('approval_list/',views.approval_list,name='approval_list'),
 
     path('ClientForm/',views.ClientForm,name='ClientForm'),
     path('cliupdate/<int:pk>', views.CliUpdate, name='CliUpdate'),

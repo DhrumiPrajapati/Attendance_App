@@ -7,7 +7,7 @@
 
 <div class="emp">
   <h4 style="text-align: left; margin: 50px 0px 50px 50px;">
-    Company Details
+    <b>Company Details</b>
   </h4>
 
   {% if compdata %}
@@ -16,40 +16,26 @@
   </h5>
 
   <table style="margin-left: 55;" class="table">
-    <!-- <thead class="thead-dark">
-      <tr>
-          <th scope="col">Client ID</th>
-          <th scope="col">Client Type</th>
-          <th scope="col">Type of Business</th>
-          <th scope="col">Firstname</th>
-          <th scope="col">Lastname</th>
-          <th scope="col">Preferred Contact Method</th>
-          <th scope="col">Email</th>
-          <th scope="col">Phone</th>
-          <th scope="col">Address</th>
-          <th scope="col">Additional Information</th>
-      </tr>
-    </thead> -->
     <tbody  class="text-left">
       {% for x in compdata %}
       <tr>
-        <td class="col-2 font-weight-bold">Company Name</td>
+        <td class="col-3 font-weight-bold">Company Name</td>
         <td>{{ x.compname }}</td>
       </tr>
       <tr>
-        <td class="col-2 font-weight-bold">Company Owner Name</td>
+        <td class="col-3 font-weight-bold">Company Owner Name</td>
         <td>{{ x.oname }}</td>
       </tr>
       <tr>
-        <td class="col-2 font-weight-bold">Email</td>
+        <td class="col-3 font-weight-bold">Email</td>
         <td>{{ x.compemail }}</td>
       </tr>
       <tr>
-        <td class="col-2 font-weight-bold">Phone</td>
+        <td class="col-3 font-weight-bold">Phone</td>
         <td>{{ x.compphone }}</td>
       </tr>
       <tr>
-        <td class="col-2 font-weight-bold">Address</td>
+        <td class="col-3 font-weight-bold">Address</td>
         <td>{{ x.compaddress }}</td>
       </tr>
       {% endfor %}
@@ -64,15 +50,15 @@
       <tbody  class="text-left">
       {% for x in compdata %}  
         <tr>
-          <td class="col-2 font-weight-bold">Leaves allowed per month</td>
+          <td class="col-3 font-weight-bold">Leaves allowed per month</td>
           <td>{{ x.lapm }}</td>
         </tr>
         <tr>
-          <td class="col-2 font-weight-bold">Paid Leaves given per month</td>
+          <td class="col-3 font-weight-bold">Paid Leaves given per month</td>
           <td>{{ x.plgm }}</td>
         </tr>
         <tr>
-          <td class="col-2 font-weight-bold">Official Weekend Leaves</td>
+          <td class="col-3 font-weight-bold">Official Weekend Leaves</td>
           <td>{{ x.offleave }}</td>
         </tr>
     {% endfor %}
@@ -96,10 +82,12 @@
 {% endblock %}
 
 {% for x in compdata %}
-<div style="margin-left: 200px;">
+<div style="margin-left: 400px;">
+
   <a href="{% url 'CompUpdate' x.pk %}" class="btn btn-outline-success btn-sm" style="margin-right: 15px;">Update</a>
     <a href="{% url 'CompDelete' x.pk %}" class="btn btn-outline-danger btn-sm">Delete</a>
 </div>
+<br><br>
 {% endfor %}
 
 {% endblock %}

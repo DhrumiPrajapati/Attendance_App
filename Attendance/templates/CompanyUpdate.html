@@ -5,7 +5,7 @@
 
 <div class="emp">
     <h4 style="text-align: left; margin: 50px 0px 50px 50px;">
-        Update Company Details
+        <b>Update Company Details</b>
     </h4>
 
     <div style="margin-left: 50px;">
@@ -19,7 +19,7 @@
         <form action="{% url 'CompUpdate' comp.pk %}" method="POST" class="post-form">
             {% csrf_token %}
             {{ compform1.as_p}}
-
+            <br>
             <h5>
                 Additional Details
             </h5> 

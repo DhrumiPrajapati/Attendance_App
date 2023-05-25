@@ -8,7 +8,7 @@
 
 <div class="emp">
   <h4 style="text-align: left; margin: 50px 0px 50px 50px;">
-    All Attendance Entries
+    <b>Attendance Entries</b>
   </h4>
   {% if attdata %}
 
@@ -33,7 +33,12 @@
       {% endfor %}
     </tbody>
   </table>
+  <div style="margin-left: 50px;">
+    <br>
+    <a href="{% url 'tasklist' %}"  class="btn btn-outline-primary btn-sm">Watch Pending Approvals</a>
+  </div>
 </div>
+
 
 <!-- <div style="margin-left: 210px; margin-bottom: 50px;">
   <br>

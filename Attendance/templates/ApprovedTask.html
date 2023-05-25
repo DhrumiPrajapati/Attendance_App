@@ -1,0 +1,43 @@
+<!-- approval.html -->
+{% extends "home.html" %}
+{% load static %}
+
+{% block content %}
+{% block emp %}
+{% block manager %}
+
+<div class="emp">
+    <h4 style="text-align: left; margin: 50px 0px 50px 50px;">
+      <b>Approved Task(s)</b>
+    </h4>
+    {% if approved_tasks %}
+        <table border='1' style="margin-left: 55;" class="table text-center">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Approved by(Senior)</th>
+                    <th scope="col">Entry filled by(Junior)</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Attendance</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for x in approved_tasks %}
+                    <tr>
+                        <td>{{ x.user_id }} - {{ x.user.first_name }} {{ x.user.last_name }}</td>
+                        <td>{{ x.name.id }} - {{ x.name.first_name }} {{ x.name.last_name }}</td>
+                        <td>{{ x.tdate }}</td>
+                        <td>{{ x.attendance }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+</div>        
+    {% else %}
+    <div style="text-align: left; margin: 50px 0px 50px 50px;">
+        <p>No approved tasks available.</p>
+    </div>
+    {% endif %}
+
+{% endblock %}
+{% endblock %}
+{% endblock %}

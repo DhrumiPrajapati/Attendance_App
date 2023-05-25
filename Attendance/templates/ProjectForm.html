@@ -5,7 +5,7 @@
 {% block manager %}
 <div class="emp">
     <h4 style="text-align: left; margin: 50px 0px 50px 50px;">
-        Project Entry Form
+        <b>Project Entry Form</b>
     </h4>
     {% if client %}
     <div style="margin-left: 50px;">
@@ -19,7 +19,7 @@
         <form action="{% url 'ProjectForm' %}" method="POST" class="post-form" >
             {% csrf_token %}
             {{ prjform1.as_p}}
-
+            <br>
             <h5>
                 Assigned Staff Details
             </h5> 

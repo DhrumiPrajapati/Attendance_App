@@ -1,0 +1,99 @@
+{% extends "home.html" %}
+{% load static %}
+
+{% block content %}
+<div class="emp">
+    <h4 style="text-align: left; margin: 50px 0px 50px 50px;">
+        <b>Summary Page</b>
+    </h4>
+
+    <form method="GET" action="{% url 'summary' %}">
+        <div class="form-group">
+            <div style="text-align: left; margin: 20px 0px 20px 50px;">
+                <label for="month">Select Month:</label>
+                <select class="form-control" id="month" name="month" style="width: fit-content; font-size: large;">
+                    <option value="1">January</option>
+                    <option value="2">February</option>
+                    <option value="3">March</option>
+                    <option value="4">April</option>
+                    <option value="5">May</option>
+                    <option value="6">June</option>
+                    <option value="7">July</option>
+                    <option value="8">August</option>
+                    <option value="9">September</option>
+                    <option value="10">October</option>
+                    <option value="11">November</option>
+                    <option value="12">December</option>
+                </select>
+                <button type="submit" class="btn btn-primary mt-3">Show Summary</button>
+            </div>
+        </div>
+    </form>
+    <!-- <form method="GET" action="{% url 'summary' %}">
+        <div style="text-align: left; margin: 20px 0px 20px 50px;">
+            <label for="month">Select Month:</label>
+            <select id="month" name="month">
+                {% for month_number, month_name in months %}
+                <option value="{{ month_number }}" {% if month_number == current_month %}selected{% endif %}>{{ month_name }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Show Summary</button>
+        </div>
+    </form> -->
+    
+    <h5 style="text-align: left; margin: 50px 0px 20px 50px;">
+        Month: <b>{{ month_name }}</b> <br>
+    </h5>
+
+    <div style="text-align: left; margin: 0px 0px 20px 50px;">
+        Total Working Days: <b>{{ total_working_days }}</b><br>
+        Total Weekend Holidays: <b>{{ total_weekends }}</b><br>    
+    </div>
+
+    {% if approved_tasks %}
+
+    <table border='1' style="margin-left: 55;" class="table text-center">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">Sr No.</th>
+            <th scope="col">Employee</th>
+            <!-- <th scope="col">Total Working Days</th>
+            <th scope="col">Holidays</th> -->
+            <th scope="col">Full Day Present</th>
+            <th scope="col">Half Day Present</th>
+            <th scope="col">Overtime Present</th>
+            <th scope="col">Absent</th>
+            <th scope="col">Total Present</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for employee, counts in employee_counts.items %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td><a href="{% url 'summary_detail' %}?employee_id={{ employee.id }}">{{ employee.id }} - {{ employee.first_name }} {{ employee.last_name }}</a></td>
+            <td>{{ counts.fullday }}</td>
+            <td>{{ counts.halfday }}</td>
+            <td>{{ counts.overtime }}</td>
+            <td>{{ counts.absent }}</td>
+            <td>{{ counts.fullday|add:counts.halfday|add:counts.overtime }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div style="text-align: left; margin: 50px 0px 50px 50px;">
+    Sorry, I don't have any data to show here.
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block manager %}
+{% block emp %}
+<div class="emp">
+    <h5 style="text-align: left; margin: 50px 0px 50px 50px;">
+        You are not authorized to see this page!
+    </h5>
+</div>
+{% endblock %}
+{% endblock %}

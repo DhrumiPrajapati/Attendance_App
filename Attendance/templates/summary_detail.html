@@ -1,0 +1,76 @@
+{% extends "home.html" %}
+{% load static %}
+
+{% block content %}
+<div class="emp">
+    <h4 style="text-align: left; margin: 50px 0px 50px 50px;">
+        <a href="{% url 'summary' %}"><img src="{% static 'images/back.png' %}" alt=""></a>
+        Detailed Summary of <b>{{ employee.first_name }} {{ employee.last_name }}</b>
+    </h4>
+
+    <!-- <div style="margin-left: 100px">
+      <div class="cbox">Full Day</div>
+      <div class="cbox">Half Day</div>
+      <div class="cbox">Overtime</div>
+      <div class="cbox">Absent</div>
+    </div> -->
+    <!-- <div class="calender">
+      <div class="month">
+        <div class="prev" onclick="moveDate('prev')">
+          <span>&#10094</span>
+        </div>
+        <div>
+          <h2 id="month">May</h2>
+          <p id="date_str">Mon May 22 2023</p>
+        </div>
+        <div class="next" onclick="moveDate('next')">
+          <span>&#10095</span>
+        </div>
+      </div>
+
+      <div class="weekends">
+        <div>Sun</div>
+        <div>Mon</div>
+        <div>Tue</div>
+        <div>Wed</div>
+        <div>Thu</div>
+        <div>Fri</div>
+        <div>Sat</div>
+      </div>
+
+      <div class="days">
+      </div>
+    </div>  -->
+</div> 
+{% if approved_att %}
+<div class="emp">
+  <table border='1' style="margin-left: 55;" class="table text-center">
+    <thead class="thead-dark">
+    <tr>
+        <th scope="col">Sr No.</th>
+        <th scope="col">Name</th>
+        <th scope="col">Attendance Date</th>
+        <th scope="col">Attendance Type</th>
+        <!-- Add more columns as needed -->
+    </tr>
+    </thead>
+    <tbody>
+    {% for att in approved_att %}
+    <tr>
+        <td>{{ forloop.counter }}</td>
+        <td>{{ att.name.first_name }} {{ att.name.last_name }}</td>
+        <td>{{ att.tdate }}</td>
+        <td>{{ att.attendance }}</td>
+        <!-- Add more columns as needed -->
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <div style="text-align: left; margin: 50px 0px 50px 50px;">
+      No approved attendance records found for this employee.
+  </div>
+{% endif %}
+</div>
+
+{% endblock %}

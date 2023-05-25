@@ -7,7 +7,7 @@
 
 <div class="emp">
   <h4 style="text-align: left; margin: 50px 0px 50px 50px;">
-    List of Juniors
+    <b>List of Juniors</b>
   </h4>
 
   <!-- <h5 style="margin: 50px 0px 20px 50px;">
@@ -15,7 +15,7 @@
   </h5>  -->
   
   {% if mapdata %}
-  <table style="margin-left: 55;" class="table">
+  <table style="margin-left: 50;" class="table">
     <tbody  class="text-left">
       <tr>
         <td><b>Number of juniors: {{ num_juniors }}</b></td>
@@ -23,7 +23,9 @@
       {% for x in mapdata %}  
       <tr>
         <td>{{ x.junior }}
-        <a href="{% url 'MapDelete' x.pk %}" class="btn btn-outline-danger btn-sm" style="margin-left: 100px; margin-right: 100px;">Delete</a>
+        <a href="{% url 'MapDelete' x.pk %}" style="margin-left: 100px; margin-right: 100px;">
+          <img src="{% static 'images/delete.png' %}" height="20" width="20">
+        </a>
       </td>
       </tr>
       {% endfor %}
@@ -42,7 +44,7 @@
 {% else %}
 <div style="margin-left: 50px; margin-bottom: 0px; font-size: large;">
   <br>
-    Oops! You haven't selected your juniors yet!! <br><br>
+    You haven't selected your juniors yet!! <br><br>
 </div>
 <div style="margin-left: 50px; margin-bottom: 50px;">
   <a href="{% url 'SrjrMapFormView' %}" class="btn btn-outline-primary btn-sm">Select Juniors</a>

@@ -6,7 +6,7 @@
 
 <div class="emp">
     <h4 style="text-align: left; margin: 50px 0px 50px 50px;">
-        Client Entry Form
+       <b>Client Entry Form</b>
     </h4>
 
     <div style="margin-left: 50px;">
@@ -20,7 +20,7 @@
         <form action="{% url 'ClientForm' %}" method="POST" class="post-form" >
             {% csrf_token %}
             {{ clientform1.as_p}}
-
+            <br>
             <h5>
                 Contact Details
             </h5> 

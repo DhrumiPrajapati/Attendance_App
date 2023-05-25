@@ -179,6 +179,7 @@
             <div class="col-md-6 col-sm-12">
                 <div class="card">
                     <div class="card-body">
+                        <h4 style="text-align: left; margin: 0px 0px 20px 150px;"><b>Log-In</b></h4>
                         <!-- <h4 class="card-title">Log In</h4> -->
                         {% for message in messages %}
                         <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
@@ -188,7 +189,7 @@
                             </button>
                         </div>
                         {% endfor %}
-    
+
                         <form method="post" class="post-form" novalidate>
                             {% csrf_token %}
                             {% for fm in form %}
@@ -208,17 +209,19 @@
                             <a href="{% url 'reset_password' %}">Forgot password?</a>
                           </div>
                         <!-- <a href="{% url 'reset_password' %}">Forgot your password?</a> -->
-                        <div class="divider d-flex align-items-center my-4">
+                        <!-- <div class="divider d-flex align-items-center my-4">
                             <p class="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
                           </div>
                           <div class="fsize">
                           <a class="btn btn-primary btn-lg" style="background-color: #3b5998;" href="#!" role="button">
                             <i class="fab fa-facebook-f white-color"></i>Continue with Facebook
+                            <img src="{% static 'images/fb.png' %}" alt="fb" width="32" height="32" style="margin-right: 2px;"> Continue with Facebook
                           </a>
                           <a class="btn btn-primary btn-lg" style="background-color: #55acee" href="#!" role="button">
                             <i class="fab fa-twitter me-2"></i>Continue with Twitter
-                        </a>
-                    </div>
+                            <img src="{% static 'images/twitter.png' %}" alt="fb" width="30" height="30" style="margin-right: 5px;"> Continue with Twitter                         
+                        </a> -->
+                    <!-- </div> -->
                     </div>
                 </div>
             </div>

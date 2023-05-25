@@ -70,6 +70,7 @@ class ClientForm2(forms.ModelForm):
 
 # Company Detail Forms
 class CompForm1(forms.ModelForm):
+    compaddress = forms.CharField(widget=forms.Textarea(attrs={"rows": 5}),label='Address')
     class Meta:
         model = Company
         fields = ['compname','oname','compemail','compphone','compaddress',]
@@ -191,8 +192,8 @@ class SrjrMapForm(forms.ModelForm):
 #         fields = ['junior']
 
 #############################################################################################
-
 # Attendance Forms
+
 class AttForm1(forms.ModelForm):
     ATTENDANCE = (('Full Day','Full Day'),
                   ('Half Day','Half Day'),
@@ -206,9 +207,7 @@ class AttForm1(forms.ModelForm):
     class Meta:
         model = Attendance
         fields = ['attendance']
-        widgets = {
-            'tdate': forms.HiddenInput(),
-        }
+        exclude = ['tdate']
 
 class AttForm2(forms.ModelForm):
     ATTENDANCE = (('Full Day','Full Day'),
@@ -223,10 +222,7 @@ class AttForm2(forms.ModelForm):
     class Meta:
         model = Attendance
         fields = ['mapping','attendance']
-        widgets = {
-            'tdate': forms.HiddenInput(),
-        }
-        # exclude = ['tdate']
+        exclude = ['tdate']
         
     def __init__(self, *args, **kwargs):
         junior = kwargs.pop('junior', None)
@@ -234,8 +230,51 @@ class AttForm2(forms.ModelForm):
         if junior:
             junior_attendance = Attendance.objects.filter(user=junior.user, tdate=self.instance.tdate, mapping=junior).first()
             if junior_attendance:
-                # self.fields['status'].initial = junior_attendance.status
-                self.fields['attendance'].initial = junior_attendance.attendance
+                self.fields['status'].initial = junior_attendance.status
+
+# class AttForm1(forms.ModelForm):
+#     ATTENDANCE = (('Full Day','Full Day'),
+#                   ('Half Day','Half Day'),
+#                   ('Overtime','Overtime'),
+#                   ('Absent','Absent'),)
+ 
+#     # tdate = forms.DateTimeField(widget=forms.DateInput(attrs={'type': 'date'}), label='Today Date')
+#     attendance = forms.ChoiceField(choices=ATTENDANCE, widget=forms.RadioSelect,label='My Attendance')
+        
+#     class Meta:
+#         model = Attendance
+#         fields = ['attendance']
+#         widgets = {
+#             'tdate': forms.HiddenInput(),
+#         }
+
+
+# class AttForm2(forms.ModelForm):
+#     ATTENDANCE = (('Full Day','Full Day'),
+#                   ('Half Day','Half Day'),
+#                   ('Overtime','Overtime'),
+#                   ('Absent','Absent'),)
+    
+#     # tdate = forms.DateTimeField(widget=forms.DateInput(attrs={'type': 'date'}), label='Today Date')
+#     mapping =  forms.ModelChoiceField(queryset=Mapping.objects.all(), label='Name')
+#     attendance = forms.ChoiceField(choices=ATTENDANCE, widget=forms.RadioSelect,label='Attendance')
+
+#     class Meta:
+#         model = Attendance
+#         fields = ['mapping','attendance']
+#         widgets = {
+#             'tdate': forms.HiddenInput(),
+#         }
+#         # exclude = ['tdate']
+        
+#     def __init__(self, *args, **kwargs):
+#         junior = kwargs.pop('junior', None)
+#         super().__init__(*args, **kwargs)
+#         if junior:
+#             junior_attendance = Attendance.objects.filter(user=junior.user, tdate=self.instance.tdate, mapping=junior).first()
+#             if junior_attendance:
+#                 # self.fields['status'].initial = junior_attendance.status
+#                 self.fields['attendance'].initial = junior_attendance.attendance
 
     # mapping = forms.ModelMultipleChoiceField(
     #     queryset=JrAttendance.objects.all(),
@@ -263,6 +302,3 @@ class AttForm2(forms.ModelForm):
     #             juniors.save()
     #         juniors.append(juniors)
     #     return juniors
-
-##juniors = mappings
-##mappings=jrs

@@ -6,7 +6,7 @@
 
 <div class="emp">
     <h4 style="text-align: left; margin: 50px 0px 50px 50px;">
-        Update Project Entry of <b>{{prj.client}} - {{prj.prjtitle}}</b>
+        <b>Update Project </b>"{{prj.prjtitle}}"
     </h4>
 
     <div style="margin-left: 50px;">
@@ -20,7 +20,7 @@
         <form action="{% url 'PrjUpdate' prj.pk %}" method="POST" class="post-form" >
             {% csrf_token %}
             {{ prjform1.as_p}}
-
+            <br>
             <h5>
                 Assigned Staff Details
             </h5> 

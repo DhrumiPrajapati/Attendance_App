@@ -79,7 +79,7 @@ class Employee(models.Model):
         phone = models.CharField(max_length=10, null=True, verbose_name='Phone')
         address = models.CharField(max_length=100, null=True, verbose_name='Address')
         bloodgroup = models.CharField(choices=BG, max_length=20, null=True, default='A+', verbose_name='Blood Group')
-        econtactname = models.CharField(max_length=30, null=True, verbose_name='Emergency Contact Name')
+        econtactname = models.CharField(max_length=50, null=True, verbose_name='Emergency Contact Name')
         econtactphone = models.CharField(max_length=10, null=True, verbose_name='Emergency Contact Number')
 
         #widget=models.Select(attrs={'style':'width:15%','class': 'form-control'})
@@ -88,9 +88,9 @@ class Employee(models.Model):
         empid = models.CharField(max_length=20, null=True, unique=True, verbose_name='Employee ID')
         role = models.CharField(choices=ROLES, verbose_name='Select your role',max_length=50,default='Employee')
         doj = models.DateTimeField(default=datetime.now,help_text = "Please use the following format: <em>YYYY-MM-DD HH:MM:SS</em>.", verbose_name='Date of Joining')
-        department = models.CharField(choices=DEPT,max_length=20,null=True, default='IT', verbose_name='Department')
+        department = models.CharField(choices=DEPT,max_length=30,null=True, default='IT', verbose_name='Department')
         designation = models.CharField(choices=DESIG,max_length=20,null=True, default='Employee', verbose_name='Designation')
-        emptype = models.CharField(choices=TYPE, max_length=20,default='Permanent Employee',null=True, verbose_name='Employment Type')
+        emptype = models.CharField(choices=TYPE, max_length=30,default='Permanent Employee',null=True, verbose_name='Employment Type')
         salary = models.IntegerField(null=True, verbose_name='Salary')
         per = models.CharField(choices=MODE,max_length=20,null=True, default='Month', verbose_name='Per')
         # option = models.CharField(choices=OPTION,max_length=20,null=True, default='No', verbose_name='Do the employee have juniors?')
@@ -106,27 +106,6 @@ class Employee(models.Model):
                         return self.firstname + " " + self.lastname
                 else:
                         return ""
-                
-# @receiver(post_delete, sender=Employee)
-# def delete_user_on_employee_delete(sender, instance, **kwargs):
-#         try:
-#                 user = User.objects.get(pk=instance.user_id)
-#                 user.delete()
-#         except User.DoesNotExist:
-#                 pass
-                
-        # def delete(self, *args, **kwargs):
-        #         # Delete the associated User object
-        #         self.user.delete()
-
-        #         # Call the parent delete() method to delete the Employee object
-        #         super().delete(*args, **kwargs)
-                
-# @receiver(pre_delete, sender=Employee)
-# def delete_user(sender, instance, **kwargs):
-# #Delete the corresponding User instance when an Employee instance is being deleted
-#         if instance.user:
-#                 instance.user.delete()
 
 # #Model for the ClientForm
 class Client(models.Model):
@@ -155,10 +134,10 @@ class Client(models.Model):
         cfirstname = models.CharField(max_length=20, null=True, verbose_name='First Name')
         clastname = models.CharField(max_length=30, null=True, verbose_name='Last Name')
         cpcm = models.CharField(choices=PCM,max_length=50,null=True, default='Phone', verbose_name='Preferred Contact Method')
-        cemail = models.EmailField(max_length=20, null=True, verbose_name='Email')
+        cemail = models.EmailField(max_length=50, null=True, verbose_name='Email')
         cphone = models.CharField(max_length=10, null=True, verbose_name='Phone')
-        caddress = models.TextField(max_length=50, null=True, verbose_name='Address')
-        ainfo = models.TextField(max_length=50, null=True, verbose_name='Additional Information')
+        caddress = models.TextField(max_length=100, null=True, verbose_name='Address')
+        ainfo = models.TextField(max_length=100, null=True, verbose_name='Additional Information')
 
 
         def client(self):
@@ -180,11 +159,11 @@ class Company(models.Model):
                     ('Sunday','Sunday'),)
 
         #general details fields
-        compname = models.CharField(max_length=20, null=True, verbose_name='Company Name')
-        oname = models.CharField(max_length=20, null=True, verbose_name='Company Owner Name')
-        compemail = models.EmailField(max_length=20, null=True, verbose_name='Email')
+        compname = models.CharField(max_length=50, null=True, verbose_name='Company Name')
+        oname = models.CharField(max_length=50, null=True, verbose_name='Company Owner Name')
+        compemail = models.EmailField(max_length=50, null=True, verbose_name='Email')
         compphone = models.CharField(max_length=10, null=True, verbose_name='Phone')
-        compaddress = models.TextField(max_length=50, null=True, verbose_name='Address')
+        compaddress = models.CharField(max_length=100, null=True, verbose_name='Address')
 
         #additional details fields
         lapm = models.IntegerField(null=True, verbose_name='Leaves allowed per month')
@@ -217,7 +196,7 @@ class Project(models.Model):
         siteloc = models.TextField(max_length=50, null=True, verbose_name='Site Location')
         startdt = models.DateTimeField(default=datetime.now,help_text = "Please use the following format: <em>YYYY-MM-DD HH:MM:SS</em>.", verbose_name='Starting Date')
         region = models.CharField(choices=REGIONS,max_length=50,null=True, default='Service Provider', verbose_name='Region')
-        description = models.TextField(max_length=50, null=True, verbose_name='Description')
+        description = models.TextField(max_length=100, null=True, verbose_name='Description')
 
         #assigned staff detail fields
         prjhead = models.CharField(max_length=100, null=True, verbose_name='Project Head')
@@ -240,13 +219,8 @@ class Project(models.Model):
 class Mapping(models.Model):
 
         user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
-        # jid = models.ForeignKey(User,on_delete=models.CASCADE, related_name='user_id', null=True)
-        # junior = models.ForeignKey(Employee, on_delete=models.CASCADE, null=True, verbose_name='Junior')
-        # firstname = models.CharField(max_length=20, null=True, verbose_name='First Name')
-        # lastname = models.CharField(max_length=30, null=True, verbose_name='Last Name')
-        # empid = models.CharField(max_length=20, null=True, unique=True, verbose_name='Employee ID')
+        # jrname = models.ForeignKey(User, on_delete=models.CASCADE, default=None, related_name="jrname")
         junior = models.CharField(max_length=255, null=True,verbose_name='Junior')
-        # junior = models.ForeignKey(User, on_delete=models.CASCADE, related_name='junior_mappings', null=True, verbose_name='Junior')
 
         class Meta:
                 db_table = "Mapping"
@@ -273,6 +247,35 @@ class Attendance(models.Model):
      
         class Meta:
                 db_table = "Attendance"
+
+        def __str__(self):
+                if self.attendance is not None:
+                        return self.attendance
+                else:
+                        return ""
+        
+        # def clean(self):
+        #         existing_entry = Attendance.objects.filter(user=self.user, tdate__date=self.tdate.date()).exists()
+        #         if existing_entry:
+        #                 raise ValidationError("An attendance entry already exists for today.")
+
+#Model for approved attendance entry          
+class ApprovedAtt(models.Model):
+        ATTENDANCE = (('Full Day','Full Day'),
+                      ('Half Day','Half Day'),
+                      ('Overtime','Overtime'),
+                      ('Absent','Absent'),)
+
+        user = models.ForeignKey(User, on_delete=models.CASCADE, default=None, related_name="user")
+        name = models.ForeignKey(User, on_delete=models.CASCADE, default=None, related_name="name")
+        tdate = models.DateTimeField(default=timezone.now, verbose_name='Today Date', editable=False)
+        # tdate=models.DateTimeField(default=timezone.now, verbose_name='Today Date')
+        attendance = models.CharField(choices=ATTENDANCE, max_length=100, null=True, verbose_name='Attendance', default='Full Day')
+        mapping = models.ForeignKey(Mapping, on_delete=models.CASCADE, default=None, null=True)
+        approved_timestamp = models.DateTimeField(auto_now_add=True)
+
+        class Meta:
+                db_table = "ApprovedAtt"
 
         def __str__(self):
                 if self.attendance is not None:

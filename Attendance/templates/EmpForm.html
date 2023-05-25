@@ -5,7 +5,7 @@
 
 <div class="emp">
     <h4 style="text-align: left; margin: 50px 0px 50px 50px;">
-        Employee Entry Form
+        <b>Employee Entry Form</b>
     </h4>
 
     <div style="margin-left: 50px;">
@@ -19,7 +19,7 @@
         <form action="{% url 'EmpForm' %}" method="POST" class="post-form" >
             {% csrf_token %}
             {{ empform1.as_p}}
-
+            <br><br>
             <h5>
                 Job Details
             </h5> 
