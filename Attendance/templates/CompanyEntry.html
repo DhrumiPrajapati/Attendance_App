@@ -1,10 +1,81 @@
 {% extends "home.html" %}
 {% load static %}
 
-{% block content %}
 {% block manager %}
 {% block emp %}
 
+<div class="emp">
+  <h4 style="text-align: left; margin: 50px 0px 50px 50px;">
+    <b>Company Details</b>
+  </h4>
+
+  {% if compdata %}
+  <h5 style="margin: 50px 0px 20px 50px;">
+    General Details
+  </h5>
+
+  <table style="margin-left: 55;" class="table">
+    <tbody  class="text-left">
+      {% for x in compdata %}
+      <tr>
+        <td class="col-3 font-weight-bold">Company Name</td>
+        <td>{{ x.compname }}</td>
+      </tr>
+      <tr>
+        <td class="col-3 font-weight-bold">Company Owner Name</td>
+        <td>{{ x.oname }}</td>
+      </tr>
+      <tr>
+        <td class="col-3 font-weight-bold">Email</td>
+        <td>{{ x.compemail }}</td>
+      </tr>
+      <tr>
+        <td class="col-3 font-weight-bold">Phone</td>
+        <td>{{ x.compphone }}</td>
+      </tr>
+      <tr>
+        <td class="col-3 font-weight-bold">Address</td>
+        <td>{{ x.compaddress }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+    </table>
+
+    <h5 style="margin: 50px 0px 20px 50px;">
+      Additional Details
+    </h5> 
+
+    <table style="margin-left: 55;" class="table">
+      <tbody  class="text-left">
+      {% for x in compdata %}  
+        <tr>
+          <td class="col-3 font-weight-bold">Leaves allowed per month</td>
+          <td>{{ x.lapm }}</td>
+        </tr>
+        <tr>
+          <td class="col-3 font-weight-bold">Paid Leaves given per month</td>
+          <td>{{ x.plgm }}</td>
+        </tr>
+        <tr>
+          <td class="col-3 font-weight-bold">Official Weekend Leaves</td>
+          <td>{{ x.offleave }}</td>
+        </tr>
+    {% endfor %}
+
+      </tbody>
+    </table>
+  </div>
+{% else %}
+<div style="margin-left: 50px; margin-bottom: 0px; font-size: large;">
+  <br>
+    No data available!  
+</div>
+{% endif %}
+{% endblock %}
+{% endblock %}
+
+
+{% block content %}
 <div class="emp">
   <h4 style="text-align: left; margin: 50px 0px 50px 50px;">
     <b>Company Details</b>
@@ -75,11 +146,8 @@
   <br> 
   <a href="{% url 'CompanyDetail' %}" class="btn btn-outline-primary btn-sm">Add Company Details</a>
 </div>
-
 {% endif %}
 
-{% endblock %}
-{% endblock %}
 
 {% for x in compdata %}
 <div style="margin-left: 400px;">

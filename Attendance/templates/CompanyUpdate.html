@@ -18,7 +18,7 @@
 
         <form action="{% url 'CompUpdate' comp.pk %}" method="POST" class="post-form">
             {% csrf_token %}
-            {{ compform1.as_p}}
+            {{ compform1.as_p }}
             <br>
             <h5>
                 Additional Details
@@ -27,7 +27,7 @@
                 <hr>
             </div>
 
-            {{ compform2.as_p}}
+            {{ compform2.as_p }}
             <button type="submit" class="save btn btn-primary">Update</button>
         </form>
     </div>

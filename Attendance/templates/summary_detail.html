@@ -51,6 +51,7 @@
         <th scope="col">Name</th>
         <th scope="col">Attendance Date</th>
         <th scope="col">Attendance Type</th>
+        <th scope="col">Approved By</th>
         <!-- Add more columns as needed -->
     </tr>
     </thead>
@@ -61,6 +62,7 @@
         <td>{{ att.name.first_name }} {{ att.name.last_name }}</td>
         <td>{{ att.tdate }}</td>
         <td>{{ att.attendance }}</td>
+        <td>{{ att.user.first_name }} {{ att.user.last_name }}</td>
         <!-- Add more columns as needed -->
     </tr>
     {% endfor %}
