@@ -1,3 +1,7 @@
+/* *{
+  background-color: #807e7e;
+} */
+
 .table-container {
   overflow-x: auto;
 }
@@ -106,7 +110,8 @@ table{
 /* calender css */
 .calender{
   margin-left: 50px;
-  width: 600px;
+  margin-bottom: 50px;
+  width: 500px;
   background-color: white;
   box-shadow: 0px 0px 15px 3px rgba(0, 0, 0, 0.2);
 }
@@ -139,11 +144,11 @@ table{
   display: flex;
   flex-wrap: wrap;
   font-weight: 300;
-  padding: 10px 0px;
+  padding: 2px 0px;
 }
 
 .days div{
-  margin-bottom: 20px;
+  margin-bottom: 13px;
   padding: 10px 0;
   transition: all 0.4s;
 }
@@ -194,4 +199,18 @@ table{
 .next:hover{
   background-color: rgba(0, 0, 0, 0.2);
   cursor: pointer;
+}
+
+.emp-container {
+  display: flex;
+}
+
+.calendar-container {
+  flex: 1;
+  margin-right: 0px;
+}
+
+.table-container {
+  margin-top: 130px;
+  flex: 1;
 }

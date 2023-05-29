@@ -164,49 +164,55 @@ def EmpForm(request):
                 username = emp.email
                 role = empform2.cleaned_data.get('role')
 
-                password=get_user_model().objects.make_random_password()
-                emp.user = get_user_model().objects.create_user(username=username, password=password)
-
-                # emp.user = get_user_model().objects.create_user(username=username, password=get_user_model().objects.make_random_password())
-                emp.user.email = email
-                emp.user.first_name = emp.firstname
-                emp.user.last_name = emp.lastname
-                emp.user.save()
-
-                group_name = ''
-                if role == 'HR':
-                    group_name = 'HR'
-                    is_staff = True
-                    is_superuser = True
-
-                elif role == 'Manager':
-                    group_name = 'Manager'
-                    is_staff = True
-                    is_superuser = False
-
+                if empform2.cleaned_data.get('emptype') == 'Contract Based':
+                    emp = empform1.save(commit=False)
+                    emp = empform2.save(commit=False)
+                    emp.user = request.user
+                    emp.save()
                 else:
-                    group_name = 'Employee'
-                    is_staff = False
-                    is_superuser = False                   
+                    password=get_user_model().objects.make_random_password()
+                    emp.user = get_user_model().objects.create_user(username=username, password=password)
 
-                group = Group.objects.get(name = group_name)
-                group.user_set.add(emp.user)
+                    # emp.user = get_user_model().objects.create_user(username=username, password=get_user_model().objects.make_random_password())
+                    emp.user.email = email
+                    emp.user.first_name = emp.firstname
+                    emp.user.last_name = emp.lastname
+                    emp.user.save()
 
-                user = User.objects.get(username=username, email=email, first_name=emp.user.first_name, last_name=emp.user.last_name)
+                    group_name = ''
+                    if role == 'HR':
+                        group_name = 'HR'
+                        is_staff = True
+                        is_superuser = True
 
-                user.is_staff = is_staff
-                user.is_superuser = is_superuser
-                user.save()
+                    elif role == 'Manager':
+                        group_name = 'Manager'
+                        is_staff = True
+                        is_superuser = False
+
+                    else:
+                        group_name = 'Employee'
+                        is_staff = False
+                        is_superuser = False                   
+
+                    group = Group.objects.get(name = group_name)
+                    group.user_set.add(emp.user)
+
+                    user = User.objects.get(username=username, email=email, first_name=emp.user.first_name, last_name=emp.user.last_name)
+
+                    user.is_staff = is_staff
+                    user.is_superuser = is_superuser
+                    user.save()
 
 
-                subject = 'Your login credentials for the attendance portal'
-                message = f'Your username is {username} and your password is {password}.'
-                from_email = 'hrcompany852@gmail.com'
-                recipient_list = [email]
-                send_mail(subject, message, from_email, recipient_list, fail_silently=False)
+                    subject = 'Your login credentials for the attendance portal'
+                    message = f'Your username is {username} and your password is {password}.'
+                    from_email = 'hrcompany852@gmail.com'
+                    recipient_list = [email]
+                    send_mail(subject, message, from_email, recipient_list, fail_silently=False)
 
-                emp.user = request.user
-                emp.save()
+                    emp.user = request.user
+                    emp.save()
 
                 if empform2.cleaned_data['emptype']=='Contract Based':
                     return redirect('SrjrMapFormView')
@@ -964,6 +970,7 @@ def summary(request):
         'current_month': current_month,
         'months': months,
         'selected_month': selected_month,
+        'month': str(selected_month),
     }
 
     return render(request, 'summary.html', context)

@@ -116,6 +116,8 @@ class PrjForm2(forms.ModelForm):
         self.fields['sitehead'].choices = [(obj.firstname, obj.employee()) for obj in Employee.objects.all()]
 
 #############################################################################################
+#to display the name of juniors from User model
+#not fetching employee having emptype = Contract based
 class SrjrMapForm(forms.ModelForm):
     
     junior = forms.ModelMultipleChoiceField(
@@ -133,7 +135,9 @@ class SrjrMapForm(forms.ModelForm):
         else:
             self.fields['junior'].queryset = User.objects.exclude(id=user.id)
 
-        self.fields['junior'].label_from_instance = lambda user: f"{user.first_name} {user.last_name} (ID:{user.id})"
+        # self.fields['junior'].label_from_instance = lambda user: f"{user.first_name} {user.last_name} (ID:{user.id})"
+        self.fields['junior'].label_from_instance = lambda user: f"{user.id} - {user.first_name} {user.last_name}"
+        # self.fields['junior'].label_from_instance = lambda user: f"{user.first_name} {user.last_name}"
 
     def save(self, commit=True):
         juniors = self.cleaned_data.get('junior', [])
@@ -158,6 +162,11 @@ class SrjrMapForm(forms.ModelForm):
         fields = ['junior']
         # exclude = ['firstname','lastname','empid']
 
+############################################################################################################################
+
+#To display the name of juniors from Employee model
+#Not excluding the name of logged in user
+
 # class SrjrMapForm(forms.ModelForm):
 #     junior = forms.MultipleChoiceField(choices=[], widget=forms.CheckboxSelectMultiple(),label='Select Junior(s)')
 
@@ -180,6 +189,45 @@ class SrjrMapForm(forms.ModelForm):
 #             mappings.append(mapping)
 #         return mappings
     
+#     def clean(self):
+#         cleaned_data = super().clean()
+#         juniors = cleaned_data.get('junior', [])
+#         if juniors and Mapping.objects.filter(user=self.user).exists():
+#             raise forms.ValidationError('You have already selected junior(s)!')
+#         return cleaned_data
+
+#     class Meta:
+#         model = Mapping
+#         fields = ['junior']
+#############################################################################################
+#To display first_name, last_name and empid of the Employee in the list
+#To exclude name of Logged in user name
+#Trial code
+
+# class SrjrMapForm(forms.ModelForm):
+#     junior = forms.MultipleChoiceField(choices=[], widget=forms.CheckboxSelectMultiple(), label='Select Junior(s)')
+
+#     def __init__(self, user, *args, **kwargs):
+#         self.user = user
+#         super().__init__(*args, **kwargs)
+#         employee_j = [
+#             (obj.id, f"{obj.empid} - {obj.firstname} {obj.lastname}")
+#             for obj in Employee.objects.exclude(id=self.user.id)
+#         ]
+#         self.fields['junior'].choices = employee_j
+
+#     def save(self, commit=True):
+#         # Override the save method to create multiple Mapping objects, one for each selected junior
+#         junior_ids = self.cleaned_data.get('junior', [])
+#         juniors = Employee.objects.filter(id__in=junior_ids)
+#         mappings = []
+#         for junior in juniors:
+#             mapping = Mapping(user=self.user, junior=junior)
+#             if commit:
+#                 mapping.save()
+#             mappings.append(mapping)
+#         return mappings
+
 #     def clean(self):
 #         cleaned_data = super().clean()
 #         juniors = cleaned_data.get('junior', [])
