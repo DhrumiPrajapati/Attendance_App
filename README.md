@@ -71,7 +71,7 @@ A robust testing process was implemented during development:
 - ✅ **Security Testing** – Email/password flows and session control
 - ✅ **Compatibility Testing** – Tested on Chrome and Firefox browsers
 
-## 🚀 Results & Impact
+## 🚀 Results
 
 - Successfully developed a fully functional attendance and payroll platform within the 5-month internship timeline
 - Optimized the attendance process, reducing daily entry time by over **40%**
